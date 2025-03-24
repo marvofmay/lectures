@@ -7,17 +7,61 @@ services:
     volumes:
       - .:/app:rw
     ports:
-      - 0.0.0.0:10990:80/tcp
+      - "81:80"
     depends_on:
       - database
 
+#  database:
+#    image: bitnami/mongodb:5.0.23
+#    container_name: apps-recruitment-task-database
+#    volumes:
+#      - mongodb:/bitnami/mongodb
+#    ports:
+#      - 27019:27017
+
   database:
-    image: bitnami/mongodb:5.0.23
-    container_name: apps-recruitment-task-database
-    volumes:
-      - mongodb:/bitnami/mongodb
+    image: mongo:latest
+    container_name: mongo
     ports:
-      - 27019:27017
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo-data:/data/db
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
+      ME_CONFIG_OPTIONS_EDITORTHEME: 'ambiance'
+      ME_CONFIG_SITE_BASEURL: '/'
+      ME_CONFIG_BASICAUTH_USERNAME: root
+      ME_CONFIG_BASICAUTH_PASSWORD: example
+      ME_CONFIG_MONGODB_URL: 'mongodb://root:example@mongo:27017/development?authSource=admin'
+    depends_on:
+      - database
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
 
 volumes:
-  mongodb:
+  mongo-data:
