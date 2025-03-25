@@ -8,8 +8,8 @@ doctrine_mongodb:
     default:
       auto_mapping: true
       mappings:
-        App:
+        Gwo:
           is_bundle: false
-          dir: '%kernel.project_dir%/src/Document'
-          prefix: 'App\Document'
-          alias: App
+          dir: '%kernel.project_dir%/src/Domain/Document'
+          prefix: 'Gwo\AppsRecruitmentTask\Domain\Document'
+          alias: Gwo

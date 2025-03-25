@@ -56,8 +56,6 @@ RUN pecl install xdebug \
 # Instalacja Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Ustawienie katalogu roboczego i kopiowanie aplikacji
-WORKDIR /app
 COPY ./ ./
 
 # Kopiowanie pliku konfiguracyjnego Apache
