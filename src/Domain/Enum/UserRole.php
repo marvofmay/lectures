@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gwo\AppsRecruitmentTask\Domain\Document\User;
+namespace Gwo\AppsRecruitmentTask\Domain\Enum;
 
 enum UserRole: string
 {

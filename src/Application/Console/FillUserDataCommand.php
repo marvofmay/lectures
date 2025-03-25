@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Gwo\AppsRecruitmentTask\Application\Console;
 
-use Gwo\AppsRecruitmentTask\Persistence\DatabaseClient;
+use Gwo\AppsRecruitmentTask\Domain\Document\User\User;
+use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\UserRole;
+use Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient;
 use Gwo\AppsRecruitmentTask\Util\StringId;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Gwo\AppsRecruitmentTask\Domain\Document\User\User;
-use Gwo\AppsRecruitmentTask\Domain\Document\User\UserRole;
 
 #[AsCommand(name: 'app:fill-user-data')]
 class FillUserDataCommand extends Command
@@ -65,9 +66,8 @@ class FillUserDataCommand extends Command
                 $hashedPassword
             );
 
-
             $this->databaseClient->upsert(
-                'User',
+                CollectionNameEnum::USER->value,
                 ['_id' => (string) $user->getId()],
                 [
                     '$set' => [

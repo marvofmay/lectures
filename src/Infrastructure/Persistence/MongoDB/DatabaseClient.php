@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gwo\AppsRecruitmentTask\Persistence;
+namespace Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB;
 
 use MongoDB\Client;
 use MongoDB\Driver\Command;

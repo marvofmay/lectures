@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Gwo\AppsRecruitmentTask\Domain\Document\User;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\UserRole;
 use Gwo\AppsRecruitmentTask\Util\StringId;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ODM\Document(collection: 'User')]
+#[ODM\Document(collection: CollectionNameEnum::USER->value)]
 final class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ODM\Id(strategy: "AUTO")]

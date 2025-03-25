@@ -7,14 +7,14 @@ namespace Gwo\AppsRecruitmentTask\Application\Query\Provider;
 namespace Gwo\AppsRecruitmentTask\Application\Query\Provider;
 
 use Gwo\AppsRecruitmentTask\Domain\Document\User\User;
-use Gwo\AppsRecruitmentTask\Domain\Document\User\UserRole;
-use Gwo\AppsRecruitmentTask\Persistence\DatabaseClient;
+use Gwo\AppsRecruitmentTask\Domain\Enum\UserRole;
+use Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient;
 use Gwo\AppsRecruitmentTask\Util\StringId;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\Exception\UserNotFoundException;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class MongoUserProvider implements UserProviderInterface
 {
