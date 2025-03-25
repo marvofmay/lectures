@@ -22,6 +22,7 @@ class MongoLectureWriterRepository implements LectureWriterInterface
             [
                 '$set' => [
                     '_id' => (string) $lecture->getId(),
+                    'lecturerId' => (string) $lecture->getLecturerId(),
                     'title' => $lecture->getName(),
                     'studentLimit' => $lecture->getStudentLimit(),
                     'startDate' => $lecture->getStartDate()->format('Y-m-d H:i:s'),
