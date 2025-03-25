@@ -1,0 +1,4 @@
+api_create_lectures:
+  path: /api/lectures
+  controller: Gwo\AppsRecruitmentTask\Presentation\Controller\CreateLectureController::create
+  methods: [POST]

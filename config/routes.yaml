@@ -1,3 +1,6 @@
-app_api_students:
-  resource: './routes/api/students'
+app_api_auth:
+  resource: './routes/api/auth'
+  type: directory
+app_api_lectures:
+  resource: './routes/api/lectures'
   type: directory
