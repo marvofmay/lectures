@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gwo\AppsRecruitmentTask\Domain\Interface;
+namespace Gwo\AppsRecruitmentTask\Domain\Interface\Lecture;
 
 use Gwo\AppsRecruitmentTask\Domain\Document\Lecture\Lecture;
 

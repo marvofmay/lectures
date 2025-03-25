@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gwo\AppsRecruitmentTask\Domain\Document\Lecture;
+namespace Gwo\AppsRecruitmentTask\Domain\Document\LectureEnrollment;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
@@ -12,7 +12,7 @@ use Gwo\AppsRecruitmentTask\Util\StringId;
 final readonly class LectureEnrollment
 {
     #[ODM\Id(type: 'string', strategy: 'auto')]
-    private ?string $id;
+    private StringId $id;
 
     #[ODM\Field(type: "string", nullable: false)]
     private StringId $lectureId;
@@ -21,14 +21,16 @@ final readonly class LectureEnrollment
     private StringId $studentId;
 
     public function __construct(
+        StringId $id,
         StringId $lectureId,
         StringId $studentId
     ) {
+        $this->id = $id;
         $this->lectureId = $lectureId;
         $this->studentId = $studentId;
     }
 
-    public function getId(): string
+    public function getId(): StringId
     {
         return $this->id;
     }

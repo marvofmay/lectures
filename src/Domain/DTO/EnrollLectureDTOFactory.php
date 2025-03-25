@@ -2,27 +2,20 @@
 
 namespace Gwo\AppsRecruitmentTask\Domain\DTO;
 
-use Symfony\Component\HttpFoundation\Request;
+use Gwo\AppsRecruitmentTask\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class CreateLectureDTOFactory
+class EnrollLectureDTOFactory
 {
     public function __construct(private ValidatorInterface $validator)
     {
     }
 
-    public function createFromRequest(Request $request): JsonResponse|CreateLectureDTO
+    public function createFromRequest(string $lectureUUID): JsonResponse|EnrollLectureDTO
     {
-        $data = json_decode($request->getContent(), true);
-
-        $dto = new CreateLectureDTO(
-                $data['name'] ?? '',
-                $data['studentLimit'] ?? 0,
-            $data['startDate'] ?? '',
-                    $data['endDate'] ?? '',
-        );
+        $dto = new EnrollLectureDTO($lectureUUID);
 
         $errors = $this->validator->validate($dto);
         if (count($errors) > 0) {

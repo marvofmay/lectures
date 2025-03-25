@@ -2,3 +2,7 @@ lecture:
   add:
     success: "Wykład został pomyślnie dodany"
     error: "Wystąpił błąd - wykład nie został dodany"
+  enroll:
+    add:
+      success: "Zapisano się na wykład"
+      error: "Wystąpił błąd - nie zapisano na wykład"

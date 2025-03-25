@@ -31,6 +31,17 @@ services:
     Gwo\AppsRecruitmentTask\Domain\Security\Voter\LectureCreateVoter:
         tags: ['security.voter']
 
+    Gwo\AppsRecruitmentTask\Domain\Security\Voter\LectureEnrollVoter:
+        tags: ['security.voter']
+
     Gwo\AppsRecruitmentTask\Application\CommandHandler\CreateLectureCommandHandler:
         tags:
             - { name: 'messenger.message_handler', bus: 'command.bus' }
+
+    Gwo\AppsRecruitmentTask\Application\CommandHandler\EnrollLectureCommandHandler:
+        tags:
+            - { name: 'messenger.message_handler', bus: 'command.bus' }
+
+#    Gwo\AppsRecruitmentTask\Domain\Exception\CustomExceptionListener:
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.exception }

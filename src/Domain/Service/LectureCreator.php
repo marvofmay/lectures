@@ -6,7 +6,7 @@ namespace Gwo\AppsRecruitmentTask\Domain\Service;
 
 use Gwo\AppsRecruitmentTask\Application\Command\CreateLectureCommand;
 use Gwo\AppsRecruitmentTask\Domain\Document\Lecture\Lecture;
-use Gwo\AppsRecruitmentTask\Domain\Interface\LectureWriterInterface;
+use Gwo\AppsRecruitmentTask\Domain\Interface\Lecture\LectureWriterInterface;
 use Gwo\AppsRecruitmentTask\Util\StringId;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;

@@ -8,5 +8,6 @@ enum PermissionLectureEnum: string
 {
     case CREATE  = 'create';
     case DELETE  = 'delete';
+    case ENROLL  = 'enroll';
     case VIEW    = 'list';
 }

@@ -48,6 +48,13 @@ final readonly class DatabaseClient
         );
     }
 
+    public function countDocuments(string $collectionName, array $query): int
+    {
+        return $this->mongoClient
+            ->selectCollection($this->databaseName, $collectionName)
+            ->countDocuments($query);
+    }
+
     public function dropDatabase(): void
     {
         $this->mongoClient->dropDatabase($this->databaseName);
