@@ -8,6 +8,7 @@
     "ext-mongodb": "*",
     "doctrine/mongodb-odm-bundle": "^4.5",
     "lambdish/phunctional": "^2.1",
+    "lexik/jwt-authentication-bundle": "^2.21",
     "mongodb/mongodb": "^1.9",
     "nelmio/cors-bundle": "^2.5",
     "ramsey/uuid": "^4.2",
@@ -15,7 +16,9 @@
     "symfony/dotenv": "^6.2",
     "symfony/flex": "^2",
     "symfony/framework-bundle": "^6.2",
+    "symfony/password-hasher": "6.2.*",
     "symfony/runtime": "6.2.*",
+    "symfony/security-bundle": "6.2.*",
     "symfony/translation": "6.2.*",
     "symfony/yaml": "^6.2"
   },

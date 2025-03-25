@@ -7,6 +7,7 @@ namespace Gwo\AppsRecruitmentTask\Presentation\Controller;
 use Gwo\AppsRecruitmentTask\Domain\DTO\CreateLectureDTO;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CreateLectureController extends AbstractController
 {
-    public function __construct(private readonly LoggerInterface $logger, private readonly TranslatorInterface $translator)
+    public function __construct(private Security $security, private readonly LoggerInterface $logger, private readonly TranslatorInterface $translator)
     {
     }
 
@@ -23,7 +24,9 @@ class CreateLectureController extends AbstractController
     {
         try {
             //$createLectureAction->execute($createLectureDTO);
-
+            $user = $this->security->getUser()->getRoles();
+            var_dump($user);
+            die();
             return new JsonResponse(
                 ['message' => $this->translator->trans('lecture.add.success', [], 'lectures')],
                 Response::HTTP_CREATED

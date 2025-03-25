@@ -28,3 +28,13 @@ services:
     Gwo\AppsRecruitmentTask\Persistence\DatabaseClient:
         $databaseUri: '%database_uri%'
         $databaseName: '%database_name%'
+
+    Gwo\AppsRecruitmentTask\Application\Console\FillUserDataCommand:
+        arguments:
+            $databaseClient: '@Gwo\AppsRecruitmentTask\Persistence\DatabaseClient'
+            $passwordHasher: '@security.user_password_hasher'
+
+    Gwo\AppsRecruitmentTask\Application\Query\Provider\MongoUserProvider:
+        arguments:
+            $databaseClient: '@Gwo\AppsRecruitmentTask\Persistence\DatabaseClient'
+            $passwordHasher: '@security.user_password_hasher'

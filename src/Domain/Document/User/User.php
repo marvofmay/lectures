@@ -6,9 +6,11 @@ namespace Gwo\AppsRecruitmentTask\Domain\Document\User;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gwo\AppsRecruitmentTask\Util\StringId;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ODM\Document(collection: 'User')]
-final readonly class User
+final class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ODM\Id(strategy: "AUTO")]
     private StringId $id;
@@ -19,14 +21,19 @@ final readonly class User
     #[ODM\Field(type: "string", nullable: false)]
     private UserRole $role;
 
+    #[ODM\Field(type: "string", nullable: true)]
+    private ?string $password = null;
+
     public function __construct(
         StringId $id,
         string $name,
-        UserRole $role
+        UserRole $role,
+        ?string $password = null
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->role = $role;
+        $this->password = $password;
     }
 
     public function getId(): StringId
@@ -42,5 +49,25 @@ final readonly class User
     public function getRole(): UserRole
     {
         return $this->role;
+    }
+
+    public function getRoles(): array
+    {
+        return [$this->role->value];
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->name;
+    }
+
+    public function eraseCredentials(): void
+    {
+        $this->password = null;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
     }
 }
