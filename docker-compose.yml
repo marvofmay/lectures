@@ -47,6 +47,20 @@ services:
     depends_on:
       - database
 
+  worker-enroll-lecture:
+    container_name: worker-enroll-lecture
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: [ "php", "bin/console", "messenger:consume", "enroll_lecture", "--verbose", "--no-interaction" ]
+    depends_on:
+      - rabbitmq
+      - app
+    environment:
+      - MESSENGER_TRANSPORT_DSN=amqp://guest:guest@rabbitmq:5672/%2f
+    volumes:
+      - ./src:/var/www/html
+
   rabbitmq:
     image: rabbitmq:management
     container_name: rabbitmq
