@@ -13,8 +13,6 @@ use Gwo\AppsRecruitmentTask\Util\StringId;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-;
-
 readonly class LectureEnroller
 {
     public function __construct(

@@ -1,0 +1,7 @@
+responses:
+  DeleteSuccess:
+    description: "Student usunięty pomyślnie"
+  NotFound:
+    description: "Nie znaleziono studenta na wykładzie"
+  ServerError:
+    description: "Błąd serwera"

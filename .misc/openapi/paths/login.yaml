@@ -1,0 +1,4 @@
+login:
+  post:
+    summary: Logowanie
+    description: Umożliwa autentykacje.

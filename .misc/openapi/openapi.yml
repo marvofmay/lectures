@@ -3,8 +3,16 @@ info:
   title: GWO Apps Recruitment Task
   version: "0.1.0"
 servers:
-  - url: http://localhost:10997
+  - url: http://127.0.0.1:81
     description: Docker
 
 paths:
-  # todo
+  /api/login:
+    $ref: "./paths/login.yaml#/login"
+  /api/lectures:
+    $ref: "./paths/create_lecture.yaml#/createLecture"
+  /api/lectures/{lectureId}/students/{studentId}:
+    $ref: "./paths/delete_student.yaml#/deleteStudent"
+  /api/lectures/{uuid}/enroll:
+    $ref: "./paths/enroll_lecture.yaml#/enrollLecture"
+

@@ -1,0 +1,4 @@
+enrollLecture:
+  post:
+    summary: Zapisywanie się na wykład
+    description: Pozwala studentowi zapisać się na wykład.
