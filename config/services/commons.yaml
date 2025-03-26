@@ -1,0 +1,33 @@
+parameters:
+  database_uri: '%env(DATABASE_URI)%'
+  database_name: '%env(key:path:url:DATABASE_URI)%'
+  env(MONGODB_URL): ''
+  env(MONGODB_DB): ''
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Gwo\AppsRecruitmentTask\:
+    resource: '../../src/'
+    exclude:
+      - '../../src/Kernel.php'
+
+  Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient:
+    $databaseUri: '%database_uri%'
+    $databaseName: '%database_name%'
+
+  Gwo\AppsRecruitmentTask\Application\Console\FillUserDataCommand:
+    arguments:
+      $databaseClient: '@Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient'
+      $passwordHasher: '@security.user_password_hasher'
+
+  Gwo\AppsRecruitmentTask\Application\Query\Provider\MongoUserProvider:
+    arguments:
+      $databaseClient: '@Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient'
+      $passwordHasher: '@security.user_password_hasher'
+
+  Gwo\AppsRecruitmentTask\Domain\Exception\CustomExceptionListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.exception }

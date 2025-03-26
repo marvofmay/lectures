@@ -1,0 +1,12 @@
+services:
+  Gwo\AppsRecruitmentTask\Application\CommandHandler\CreateLectureCommandHandler:
+    tags:
+      - { name: 'messenger.message_handler', bus: 'command.bus' }
+
+  Gwo\AppsRecruitmentTask\Application\CommandHandler\EnrollLectureCommandHandler:
+    tags:
+      - { name: 'messenger.message_handler', bus: 'command.bus' }
+
+  Gwo\AppsRecruitmentTask\Application\CommandHandler\DeleteStudentFromLectureCommandHandler:
+    tags:
+      - { name: 'messenger.message_handler', bus: 'command.bus' }
