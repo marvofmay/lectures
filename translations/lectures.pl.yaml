@@ -6,6 +6,9 @@ lecture:
     add:
       success: "Zapisano się na wykład"
       error: "Wystąpił błąd - nie zapisano na wykład"
+    queued:
+      success: "Dodano do kolejki"
+      error: "Wystąpił błąd - nie dodano do kolejki"
   student:
     delete:
       success: "Usunięto studenta z wykładu"

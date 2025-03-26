@@ -22,6 +22,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
       curl \
       gnupg \
       ca-certificates \
+      pkg-config \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
@@ -31,8 +32,13 @@ RUN pecl install mongodb \
     && docker-php-ext-enable mongodb
 
 # Instalacja AMQP
-RUN pecl install amqp \
-    && docker-php-ext-enable amqp
+RUN docker-php-source extract \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp \
+    && docker-php-source delete
+
+# **Sprawdzenie, czy amqp.ini istnieje i jest poprawnie ładowane**
+RUN echo "extension=amqp.so" > /usr/local/etc/php/conf.d/20-amqp.ini
 
 # Instalacja rozszerzeń PHP
 RUN docker-php-ext-configure intl \

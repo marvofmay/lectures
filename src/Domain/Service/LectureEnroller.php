@@ -11,7 +11,9 @@ use Gwo\AppsRecruitmentTask\Domain\Interface\LectureEnrollment\LectureEnrollment
 use Gwo\AppsRecruitmentTask\Domain\Interface\LectureEnrollment\LectureEnrollmentWriterInterface;
 use Gwo\AppsRecruitmentTask\Util\StringId;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 
 readonly class LectureEnroller
 {
@@ -25,39 +27,45 @@ readonly class LectureEnroller
 
     public function enroll(EnrollLectureCommand $command): void
     {
+        $lectureEnrollment = new LectureEnrollment(
+            StringId::new(),
+            new StringId($command->getLectureUUID()),
+            new StringId($command->getStudentUUID()),
+        );
+
+        $this->lectureEnrollmentWriterRepository->saveInDB($lectureEnrollment);
+    }
+
+    public function validateBeforeQueuedEnrollment(string $lectureUUID): array
+    {
+        $errors = [];
         $user = $this->security->getUser();
         if (!$user instanceof UserInterface) {
-            throw new \LogicException('Musisz być zalogowany.');
+            $errors = ['message' => 'Musisz być zalogowany.', 'code' => Response::HTTP_UNAUTHORIZED];
         }
 
-        $lecture = $this->lectureReaderRepository->findByUUID($command->getLectureUUID());
+        $lecture = $this->lectureReaderRepository->findByUUID($lectureUUID);
         if (!$lecture) {
-            throw new \RuntimeException('Nie znaleziono wykładu.');
+            $errors = ['message' => 'Nie znaleziono wykładu.', 'code' => Response::HTTP_NOT_FOUND];
         }
 
         if ($this->lectureEnrollmentReaderRepository->countEnrolledStudentsByLectureId((string)$lecture->getId()) >= $lecture->getStudentLimit()) {
-            throw new \RuntimeException('Brak miejsc na ten wykład.');
+            $errors = ['message' => 'Brak miejsc na ten wykład.', 'code' => Response::HTTP_CONFLICT];
         }
 
         $now = new \DateTimeImmutable();
         if ($lecture->getEndDate() <= $now) {
-            throw new \RuntimeException('Nie można zapisać - wykład już się zakończył.');
+            $errors = ['message' => 'Nie można zapisać - wykład już się zakończył.', 'code' => Response::HTTP_BAD_REQUEST];
         }
 
         if ($lecture->getStartDate() <= $now && $lecture->getEndDate() > $now) {
-            throw new \RuntimeException('Nie można zapisać - wykład już trwa.');
+            $errors = ['message' => 'Nie można zapisać - wykład już trwa.', 'code' => Response::HTTP_BAD_REQUEST];
         }
 
         if ($this->lectureEnrollmentReaderRepository->isStudentAlreadyEnrolled((string) $lecture->getId(), (string) $user->getId())) {
-            throw new \RuntimeException('Jesteś już zapisana/y na ten wykład.');
+            $errors = ['message' => 'Jesteś już zapisana/y na ten wykład.', 'code' => Response::HTTP_CONFLICT];
         }
 
-        $lectureEnrollment = new LectureEnrollment(
-            StringId::new(),
-            new StringId($command->getLectureUUID()),
-            $user->getId(),
-        );
-
-        $this->lectureEnrollmentWriterRepository->saveInDB($lectureEnrollment);
+        return $errors;
     }
 }
