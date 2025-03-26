@@ -20,3 +20,36 @@ responses:
             message:
               type: string
               example: "Wystąpił błąd - nie zapisano na wykład: Access Denied."
+
+  NotFound:
+    description: Nie znaleziono zasobu
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Nie znaleziono wykładu."
+
+  NoLimits:
+    description: Brak wolnych miejsc
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Brak miejsc na ten wykład."
+
+  Expired:
+    description: Upłynął termin zapisów
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Nie można zapisać - wykład już się zakończył."

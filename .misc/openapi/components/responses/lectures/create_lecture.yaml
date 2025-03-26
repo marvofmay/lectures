@@ -20,3 +20,5 @@ responses:
             message:
               type: string
               example: "Wystąpił błąd - wykład nie został dodany: Access Denied."
+
+

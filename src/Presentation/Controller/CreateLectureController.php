@@ -29,7 +29,6 @@ class CreateLectureController extends AbstractController
     {
         try {
             $this->denyAccessUnlessGranted(PermissionLectureEnum::CREATE->value, Lecture::class);
-
             $dtoOrResponse = $dtoFactory->createFromRequest($request);
             if ($dtoOrResponse instanceof JsonResponse) {
                 return $dtoOrResponse;

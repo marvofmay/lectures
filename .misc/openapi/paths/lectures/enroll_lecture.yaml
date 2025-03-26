@@ -12,7 +12,13 @@ enrollLecture:
     responses:
       204:
         $ref: "../../components/responses/lectures/enroll_lecture.yaml#/responses/EnrollSuccess"
+      400:
+        $ref: "../../components/responses/lectures/enroll_lecture.yaml#/responses/Expired"
       401:
         $ref: "../../components/responses/shared/invalid_token.yaml#/responses/InvalidToken"
+      404:
+        $ref: "../../components/responses/lectures/enroll_lecture.yaml#/responses/NotFound"
+      409:
+        $ref: "../../components/responses/lectures/enroll_lecture.yaml#/responses/NoLimits"
       500:
         $ref: "../../components/responses/lectures/enroll_lecture.yaml#/responses/EnrollFailed"

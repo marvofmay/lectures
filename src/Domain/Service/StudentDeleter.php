@@ -17,17 +17,11 @@ readonly class StudentDeleter
     public function __construct(
         private LectureEnrollmentReaderInterface $lectureEnrollmentReaderRepository,
         private LectureEnrollmentWriterInterface $lectureEnrollmentWriterRepository,
-        private Security $security,
     ) {
     }
 
     public function delete(DeleteStudentFromLectureCommand $command): void
     {
-        $user = $this->security->getUser();
-        if (!$user instanceof UserInterface) {
-            throw new \LogicException('Musisz być zalogowany.');
-        }
-
         $lectureEnrollment = $this->lectureEnrollmentReaderRepository->getEnrolledStudentByLectureId($command->getLectureUUID(), $command->getStudentUUID());
         if (!$lectureEnrollment) {
             throw new \RuntimeException('Nie znaleziono studenta zapisanego na ten wykład.');
