@@ -1,0 +1,14 @@
+responses:
+  InvalidToken:
+    description: "Nieprawidłowy token"
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: "Invalid JWT Token"

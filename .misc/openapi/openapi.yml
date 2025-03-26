@@ -8,11 +8,13 @@ servers:
 
 paths:
   /api/login:
-    $ref: "./paths/login.yaml#/login"
+    $ref: "./paths/auths/login.yaml#/login"
   /api/lectures:
-    $ref: "./paths/create_lecture.yaml#/createLecture"
-  /api/lectures/{lectureId}/students/{studentId}:
-    $ref: "./paths/delete_student.yaml#/deleteStudent"
+    $ref: "./paths/lectures/create_lecture.yaml#/createLecture"
+  /api/lectures/{lectureUUID}/students/{studentUUID}:
+    $ref: "./paths/lectures/delete_student.yaml#/deleteStudent"
   /api/lectures/{uuid}/enroll:
-    $ref: "./paths/enroll_lecture.yaml#/enrollLecture"
+    $ref: "./paths/lectures/enroll_lecture.yaml#/enrollLecture"
+  /api/students/lectures:
+    $ref: "./paths/students/list_lectures.yaml#/listLectures"
 

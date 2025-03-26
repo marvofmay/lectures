@@ -1,0 +1,18 @@
+enrollLecture:
+  post:
+    summary: Zapisywanie się na wykład
+    description: Pozwala studentowi zapisać się na wykład.
+    parameters:
+      - name: lectureUUID
+        in: path
+        required: true
+        description: ID wykładu na który student chce się zapisać
+        schema:
+          type: string
+    responses:
+      204:
+        $ref: "../../components/responses/lectures/enroll_lecture.yaml#/responses/EnrollSuccess"
+      401:
+        $ref: "../../components/responses/shared/invalid_token.yaml#/responses/InvalidToken"
+      500:
+        $ref: "../../components/responses/lectures/enroll_lecture.yaml#/responses/EnrollFailed"

@@ -1,0 +1,26 @@
+deleteStudent:
+  delete:
+    summary: Usuń studenta z wykładu
+    description: Pozwala wykładowcy usnąć studenta z swojego wykładu.
+    parameters:
+      - name: lectureUUID
+        in: path
+        required: true
+        description: ID wykładu
+        schema:
+          type: string
+      - name: studentUUID
+        in: path
+        required: true
+        description: ID studenta
+        schema:
+          type: string
+    responses:
+      200:
+        $ref: "../../components/responses/lectures/delete_student.yaml#/responses/DeleteSuccess"
+      401:
+        $ref: "../../components/responses/shared/invalid_token.yaml#/responses/InvalidToken"
+      404:
+        $ref: "../../components/responses/lectures/delete_student.yaml#/responses/NotFound"
+      500:
+        $ref: "../../components/responses/lectures/delete_student.yaml#/responses/ServerError"

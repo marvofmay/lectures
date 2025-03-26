@@ -1,0 +1,25 @@
+login:
+  post:
+    summary: Logowanie
+    description: Umożliwia autentykację.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: "jan.kowalski"
+              password:
+                type: string
+                example: "super_tajne_haslo"
+            required:
+              - name
+              - password
+    responses:
+      200:
+        $ref: "../../components/responses/auths/login.yaml#/responses/LoginSuccess"
+      401:
+        $ref: "../../components/responses/auths/login.yaml#/responses/LoginFailed"

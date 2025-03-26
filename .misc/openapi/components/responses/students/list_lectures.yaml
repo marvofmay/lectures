@@ -1,0 +1,30 @@
+responses:
+  ListSuccess:
+    description: Pomyślnie pobrana lista wykładów
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Lecture about education"
+                  lecturerName:
+                    type: string
+                    example: "Natalie"
+                  startDate:
+                    type: string
+                    format: date-time
+                    example: "2025-03-29 08:00"
+                  endDate:
+                    type: string
+                    format: date-time
+                    example: "2025-03-29 15:00"
+                  studentLimit:
+                    type: integer
+                    example: 15

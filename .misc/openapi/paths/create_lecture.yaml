@@ -1,4 +1,0 @@
-createLecture:
-  post:
-    summary: Dodaje wykład
-    description: Pozwala na dodanie wykładu przez wykładowcę.

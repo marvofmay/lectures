@@ -1,0 +1,37 @@
+createLecture:
+  post:
+    summary: Dodaje wykład
+    description: Pozwala na dodanie wykładu przez wykładowcę.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: "Lecture about education"
+              studentLimit:
+                type: integer
+                example: 15
+              startDate:
+                type: string
+                format: date-time
+                example: "2025-03-29 08:00:00"
+              endDate:
+                type: string
+                format: date-time
+                example: "2025-03-29 15:00:00"
+            required:
+              - name
+              - studentLimit
+              - startDate
+              - endDate
+    responses:
+      204:
+        $ref: "../../components/responses/lectures/create_lecture.yaml#/responses/CreateSuccess"
+      401:
+        $ref: "../../components/responses/shared/invalid_token.yaml#/responses/InvalidToken"
+      500:
+        $ref: "../../components/responses/lectures/create_lecture.yaml#/responses/CreateFailed"

@@ -1,0 +1,9 @@
+listLectures:
+  get:
+    summary: Pobiera listę wykładów
+    description: Pozwala studentowi na pobranie listy wykładów na które się zapisał
+    responses:
+      200:
+        $ref: "../../components/responses/students/list_lectures.yaml#/responses/ListSuccess"
+      401:
+        $ref: "../../components/responses/shared/invalid_token.yaml#/responses/InvalidToken"
