@@ -1,4 +1,8 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
   Gwo\AppsRecruitmentTask\Application\CommandHandler\CreateLectureCommandHandler:
     tags:
       - { name: 'messenger.message_handler', bus: 'command.bus' }
@@ -10,3 +14,7 @@ services:
   Gwo\AppsRecruitmentTask\Application\CommandHandler\DeleteStudentFromLectureCommandHandler:
     tags:
       - { name: 'messenger.message_handler', bus: 'command.bus' }
+
+  Gwo\AppsRecruitmentTask\Application\QueryHandler\StudentListLecturesQueryHandler:
+    tags:
+      - { name: 'messenger.message_handler', bus: 'query.bus' }

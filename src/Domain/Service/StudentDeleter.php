@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace Gwo\AppsRecruitmentTask\Domain\Service;
 
 use Gwo\AppsRecruitmentTask\Application\Command\DeleteStudentFromLectureCommand;
-use Gwo\AppsRecruitmentTask\Application\Command\EnrollLectureCommand;
 use Gwo\AppsRecruitmentTask\Domain\Document\LectureEnrollment\LectureEnrollment;
-use Gwo\AppsRecruitmentTask\Domain\Interface\Lecture\LectureReaderInterface;
 use Gwo\AppsRecruitmentTask\Domain\Interface\LectureEnrollment\LectureEnrollmentReaderInterface;
 use Gwo\AppsRecruitmentTask\Domain\Interface\LectureEnrollment\LectureEnrollmentWriterInterface;
 use Gwo\AppsRecruitmentTask\Util\StringId;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
-
-;
 
 readonly class StudentDeleter
 {

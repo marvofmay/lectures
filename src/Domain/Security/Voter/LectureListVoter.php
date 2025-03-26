@@ -11,11 +11,11 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-final class StudentDeleteVoter extends Voter
+final class LectureListVoter extends Voter
 {
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return $attribute === PermissionLectureEnum::DELETE_STUDENT->value && $subject instanceof Lecture;
+        return $attribute === PermissionLectureEnum::LIST_LECTURES->value && $subject === Lecture::class;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -24,10 +24,6 @@ final class StudentDeleteVoter extends Voter
             return false;
         }
 
-        if ($token->getUser()->getRole() !== UserRole::LECTURER) {
-            return false;
-        }
-
-        return (string)$subject->getLecturerId() === (string)$token->getUser()->getId();
+        return $token->getUser()->getRole() === UserRole::STUDENT;
     }
 }

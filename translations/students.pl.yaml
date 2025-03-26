@@ -1,0 +1,4 @@
+student:
+  lectures:
+    list:
+      error: "Wystąpił błąd - lista wykładów nie została pobrana"

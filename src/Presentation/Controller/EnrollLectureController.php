@@ -8,7 +8,6 @@ use Gwo\AppsRecruitmentTask\Application\Command\EnrollLectureCommand;
 use Gwo\AppsRecruitmentTask\Domain\Document\Lecture\Lecture;
 use Gwo\AppsRecruitmentTask\Domain\DTO\EnrollLectureDTOFactory;
 use Gwo\AppsRecruitmentTask\Domain\Enum\PermissionLectureEnum;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +19,6 @@ class EnrollLectureController extends AbstractController
 {
     public function __construct(
         private readonly MessageBusInterface $commandBus,
-        private readonly LoggerInterface $logger,
         private readonly TranslatorInterface $translator
     ) {
     }
@@ -41,7 +39,6 @@ class EnrollLectureController extends AbstractController
             return new JsonResponse(['message' => $this->translator->trans('lecture.enroll.add.success', [], 'lectures')], Response::HTTP_CREATED);
         } catch (\Exception $error) {
             $message = sprintf('%s: %s', $this->translator->trans('lecture.enroll.add.error', [], 'lectures'), $error->getMessage());
-            $this->logger->error($message);
 
             return new JsonResponse(['message' => $message], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

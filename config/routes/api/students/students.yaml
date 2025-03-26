@@ -1,4 +1,4 @@
 api_list_lectures:
   path: /api/students/lectures
-  controller: Gwo\AppsRecruitmentTask\Presentation\Controller\ListLecturesController::list
+  controller: Gwo\AppsRecruitmentTask\Presentation\Controller\StudentListLecturesController::list
   methods: [GET]

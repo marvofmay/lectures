@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\Reader;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Gwo\AppsRecruitmentTask\Domain\Document\Lecture\Lecture;
 use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
 use Gwo\AppsRecruitmentTask\Domain\Interface\Lecture\LectureReaderInterface;
@@ -34,5 +36,38 @@ class MongoLectureReaderRepository implements LectureReaderInterface
             new \DateTimeImmutable($lectureData['startDate']),
             new \DateTimeImmutable($lectureData['endDate'])
         );
+    }
+
+    public function findLecturesByStudentUUID(string $studentUUID): Collection
+    {
+        $lectureEnrollments = $this->databaseClient->getByQuery(
+            CollectionNameEnum::LECTURE_ENROLLMENT->value,
+            ['studentId' => $studentUUID]
+        );
+
+        if (empty($lectureEnrollments)) {
+            return new ArrayCollection();
+        }
+
+        $lectureIds = array_map(fn($enrollment) => $enrollment['lectureId'], $lectureEnrollments);
+
+        $lectures = $this->databaseClient->getByQuery(
+            CollectionNameEnum::LECTURE->value,
+            ['_id' => ['$in' => $lectureIds]]
+        );
+
+        $lectureObjects = array_map(
+            fn($lectureData) => new Lecture(
+                new StringId($lectureData['_id']),
+                new StringId($lectureData['lecturerId']),
+                $lectureData['name'],
+                $lectureData['studentLimit'],
+                new \DateTimeImmutable($lectureData['startDate']),
+                new \DateTimeImmutable($lectureData['endDate'])
+            ),
+            $lectures
+        );
+
+        return new ArrayCollection($lectureObjects);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Gwo\AppsRecruitmentTask\Domain\Exception;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -12,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class CustomExceptionListener
 {
-    public function __construct(private TranslatorInterface $translator)
+    public function __construct(private TranslatorInterface $translator, private LoggerInterface $logger)
     {
     }
 
@@ -24,6 +25,7 @@ class CustomExceptionListener
             $message = $exception->getMessage();
         } else {
             $message = 'message.unexpectedError';
+            $this->logger->error($message, ['exception' => $exception]);
         }
 
         $response = new JsonResponse([
