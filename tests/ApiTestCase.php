@@ -20,6 +20,12 @@ abstract class ApiTestCase extends WebTestCase
     protected const LECTURE_NAME = 'Lecture about education';
     protected const LECTURE_EXPIRED_NAME = 'Lecture about IT';
     protected const LECTURE_LIMITED_NAME = 'Lecture about OZE';
+    protected const LECTURER_EMMA = 'Emma';
+    protected const LECTURER_DANIEL = 'Daniel';
+    protected const LECTURER_NATALIE = 'Natalie';
+    protected const STUDENT_ETHAN = 'Ethan';
+    protected const STUDENT_OLIVIA = 'Olivia';
+    protected const STUDENT_MICHAEL = 'Michael';
 
     protected readonly KernelBrowser $httpClient;
 
@@ -191,21 +197,7 @@ abstract class ApiTestCase extends WebTestCase
         ]);
     }
 
-    protected function loginAsStudent(string $name = 'Ethan'): string
-    {
-        $loginData = [
-            'name' => $name,
-            'password' => lcfirst($name),
-        ];
-        $loginResponse = $this->makeRequest('POST', '/api/login', json_encode($loginData), [
-            'CONTENT_TYPE' => 'application/json',
-        ]);
-        $data = json_decode($loginResponse->getContent(), true);
-
-        return $data['token'];
-    }
-
-    public function loginAsLecturer(string $name = 'Sophia'): string
+    protected function loginUser(string $name = self::LECTURER_EMMA): string
     {
         $loginData = [
             'name' => $name,
