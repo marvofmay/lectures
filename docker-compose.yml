@@ -59,7 +59,7 @@ services:
     environment:
       - MESSENGER_TRANSPORT_DSN=amqp://guest:guest@rabbitmq:5672/%2f
     volumes:
-      - ./src:/var/www/html
+      - .:/var/www/html
 
   rabbitmq:
     image: rabbitmq:management
