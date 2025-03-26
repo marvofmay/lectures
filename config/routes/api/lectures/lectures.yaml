@@ -9,3 +9,11 @@ api_enroll_lectures:
   methods: [ POST ]
   requirements:
     uuid: '[0-9a-fA-F-]{36}'
+
+api_delete_student_lectures:
+  path: /api/lectures/{lectureUUID}/students/{studentUUID}
+  controller: Gwo\AppsRecruitmentTask\Presentation\Controller\DeleteStudentLectureController::deleteStudentFromLecture
+  methods: [ DELETE ]
+  requirements:
+    lectureUUID: '[0-9a-fA-F-]{36}'
+    studentUUID: '[0-9a-fA-F-]{36}'

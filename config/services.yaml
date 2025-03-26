@@ -42,6 +42,10 @@ services:
         tags:
             - { name: 'messenger.message_handler', bus: 'command.bus' }
 
-#    Gwo\AppsRecruitmentTask\Domain\Exception\CustomExceptionListener:
-#        tags:
-#            - { name: kernel.event_listener, event: kernel.exception }
+    Gwo\AppsRecruitmentTask\Application\CommandHandler\DeleteStudentFromLectureCommandHandler:
+        tags:
+            - { name: 'messenger.message_handler', bus: 'command.bus' }
+
+    Gwo\AppsRecruitmentTask\Domain\Exception\CustomExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }

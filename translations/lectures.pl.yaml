@@ -6,3 +6,7 @@ lecture:
     add:
       success: "Zapisano się na wykład"
       error: "Wystąpił błąd - nie zapisano na wykład"
+  student:
+    delete:
+      success: "Usunięto studenta z wykładu"
+      error: "Wystąpił błąd - nie usunięto studenta z wykładu"

@@ -28,4 +28,14 @@ class MongoLectureEnrollmentReaderRepository implements LectureEnrollmentReaderI
 
         return !empty($result);
     }
+
+    public function getEnrolledStudentByLectureId(string $lectureId, string $studentId): ?array
+    {
+        $result = $this->databaseClient->getByQuery(CollectionNameEnum::LECTURE_ENROLLMENT->value, [
+            'lectureId' => $lectureId,
+            'studentId' => $studentId
+        ]);
+
+        return !empty($result) ? $result[0] : null;
+    }
 }

@@ -24,9 +24,17 @@ class MongoLectureEnrollmentWriterRepository implements LectureEnrollmentWriterI
                 '$set' => [
                     '_id' => (string) $lectureEnrollment->getId(),
                     'lectureId' => (string) $lectureEnrollment->getLectureId(),
-                    'studentId'  =>(string) $lectureEnrollment->getStudentId(),
+                    'studentId' => (string) $lectureEnrollment->getStudentId(),
                 ],
             ]
         );
+    }
+
+    public function deleteInDB(LectureEnrollment $lectureEnrollment): void
+    {
+        $this->databaseClient->deleteDocuments(CollectionNameEnum::LECTURE_ENROLLMENT->value, [
+            'lectureId' => (string) $lectureEnrollment->getLectureId(),
+            'studentId' => (string) $lectureEnrollment->getStudentId(),
+        ]);
     }
 }

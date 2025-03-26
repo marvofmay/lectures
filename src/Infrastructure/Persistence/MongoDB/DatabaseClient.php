@@ -55,6 +55,21 @@ final readonly class DatabaseClient
             ->countDocuments($query);
     }
 
+    public function deleteDocuments(string $collectionName, array $query): void
+    {
+        $delete = new Command([
+            'delete' => $collectionName,
+            'deletes' => [
+                [
+                    'q' => $query,
+                    'limit' => 1,
+                ],
+            ],
+        ]);
+
+        $this->mongoClient->getManager()->executeCommand($this->databaseName, $delete);
+    }
+
     public function dropDatabase(): void
     {
         $this->mongoClient->dropDatabase($this->databaseName);
