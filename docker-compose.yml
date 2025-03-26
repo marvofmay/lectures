@@ -48,7 +48,7 @@ services:
       - database
 
   rabbitmq:
-    image: rabbitmq:management
+    image: rabbitmq:3.7-management
     container_name: rabbitmq
     restart: always
     environment:
@@ -60,20 +60,6 @@ services:
     volumes:
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq/
-
-  worker-enroll-lecture:
-    container_name: worker-enroll-lecture
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    command: [ "php", "bin/console", "messenger:consume", "enroll_lecture", "--verbose", "--no-interaction" ]
-    environment:
-      - MESSENGER_TRANSPORT_DSN=amqp://guest:guest@rabbitmq:5672/%2f
-    volumes:
-      - .:/var/www/html
-    depends_on:
-      - rabbitmq
-      - app
 
 ###> doctrine/mongodb-odm-bundle ###
   mongodb:

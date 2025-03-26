@@ -9,7 +9,6 @@ framework:
                 middleware:
                     - validation
         transports:
-            async: '%env(MESSENGER_TRANSPORT_DSN)%'
             enroll_lecture:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%/enroll_lecture'
                 options:
