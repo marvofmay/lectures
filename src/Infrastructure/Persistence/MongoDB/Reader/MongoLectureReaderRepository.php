@@ -56,15 +56,30 @@ class MongoLectureReaderRepository implements LectureReaderInterface
             ['_id' => ['$in' => $lectureIds]]
         );
 
+        if (empty($lectures)) {
+            return new ArrayCollection();
+        }
+
+        $lecturerIds = array_unique(array_map(fn($lecture) => $lecture['lecturerId'], $lectures));
+        $lecturers = $this->databaseClient->getByQuery(
+            CollectionNameEnum::USER->value,
+            ['_id' => ['$in' => $lecturerIds]]
+        );
+
+        $lecturerMap = [];
+        foreach ($lecturers as $lecturer) {
+            $lecturerMap[$lecturer['_id']] = $lecturer['name'];
+        }
+
         $lectureObjects = array_map(
-            fn($lectureData) => new Lecture(
-                new StringId($lectureData['_id']),
-                new StringId($lectureData['lecturerId']),
-                $lectureData['name'],
-                $lectureData['studentLimit'],
-                new \DateTimeImmutable($lectureData['startDate']),
-                new \DateTimeImmutable($lectureData['endDate'])
-            ),
+            fn($lectureData) => [
+                'id' => (string) $lectureData['_id'],
+                'name' => $lectureData['name'],
+                'studentLimit' => $lectureData['studentLimit'],
+                'startDate' => (new \DateTimeImmutable($lectureData['startDate'])),
+                'endDate' => (new \DateTimeImmutable($lectureData['endDate'])),
+                'lecturerName' => $lecturerMap[$lectureData['lecturerId']] ?? 'Nieznany wykładowca',
+            ],
             $lectures
         );
 
