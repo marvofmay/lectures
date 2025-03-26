@@ -8,6 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Gwo\AppsRecruitmentTask\Domain\Document\Lecture\Lecture;
 use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\LectureCollectionColumnEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\LectureEnrollmentCollectionColumnEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\UserCollectionColumnEnum;
 use Gwo\AppsRecruitmentTask\Domain\Interface\Lecture\LectureReaderInterface;
 use Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient;
 use Gwo\AppsRecruitmentTask\Util\StringId;
@@ -20,7 +23,7 @@ class MongoLectureReaderRepository implements LectureReaderInterface
 
     public function findByUUID(string $uuid): ?Lecture
     {
-        $result = $this->databaseClient->getByQuery(CollectionNameEnum::LECTURE->value, ['_id' => $uuid]);
+        $result = $this->databaseClient->getByQuery(CollectionNameEnum::LECTURE->value, [LectureCollectionColumnEnum::ID->value => $uuid]);
 
         if (empty($result)) {
             return null;
@@ -42,7 +45,7 @@ class MongoLectureReaderRepository implements LectureReaderInterface
     {
         $lectureEnrollments = $this->databaseClient->getByQuery(
             CollectionNameEnum::LECTURE_ENROLLMENT->value,
-            ['studentId' => $studentUUID]
+            [LectureEnrollmentCollectionColumnEnum::STUDENT_ID->value => $studentUUID]
         );
 
         if (empty($lectureEnrollments)) {
@@ -53,7 +56,7 @@ class MongoLectureReaderRepository implements LectureReaderInterface
 
         $lectures = $this->databaseClient->getByQuery(
             CollectionNameEnum::LECTURE->value,
-            ['_id' => ['$in' => $lectureIds]]
+            [LectureCollectionColumnEnum::ID->value => ['$in' => $lectureIds]]
         );
 
         if (empty($lectures)) {
@@ -63,7 +66,7 @@ class MongoLectureReaderRepository implements LectureReaderInterface
         $lecturerIds = array_unique(array_map(fn($lecture) => $lecture['lecturerId'], $lectures));
         $lecturers = $this->databaseClient->getByQuery(
             CollectionNameEnum::USER->value,
-            ['_id' => ['$in' => $lecturerIds]]
+            [UserCollectionColumnEnum::ID->value => ['$in' => $lecturerIds]]
         );
 
         $lecturerMap = [];

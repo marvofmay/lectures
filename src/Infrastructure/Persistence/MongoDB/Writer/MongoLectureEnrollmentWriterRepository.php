@@ -6,6 +6,7 @@ namespace Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\Writer;
 
 use Gwo\AppsRecruitmentTask\Domain\Document\LectureEnrollment\LectureEnrollment;
 use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\LectureEnrollmentCollectionColumnEnum;
 use Gwo\AppsRecruitmentTask\Domain\Interface\LectureEnrollment\LectureEnrollmentWriterInterface;
 use Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient;
 
@@ -19,12 +20,12 @@ class MongoLectureEnrollmentWriterRepository implements LectureEnrollmentWriterI
     {
         $this->databaseClient->upsert(
             CollectionNameEnum::LECTURE_ENROLLMENT->value,
-            ['_id' => (string) $lectureEnrollment->getId()],
+            [LectureEnrollmentCollectionColumnEnum::ID->value => (string) $lectureEnrollment->getId()],
             [
                 '$set' => [
-                    '_id' => (string) $lectureEnrollment->getId(),
-                    'lectureId' => (string) $lectureEnrollment->getLectureId(),
-                    'studentId' => (string) $lectureEnrollment->getStudentId(),
+                    LectureEnrollmentCollectionColumnEnum::ID->value => (string) $lectureEnrollment->getId(),
+                    LectureEnrollmentCollectionColumnEnum::LECTURE_ID->value => (string) $lectureEnrollment->getLectureId(),
+                    LectureEnrollmentCollectionColumnEnum::STUDENT_ID->value => (string) $lectureEnrollment->getStudentId(),
                 ],
             ]
         );
@@ -33,8 +34,8 @@ class MongoLectureEnrollmentWriterRepository implements LectureEnrollmentWriterI
     public function deleteInDB(LectureEnrollment $lectureEnrollment): void
     {
         $this->databaseClient->deleteDocuments(CollectionNameEnum::LECTURE_ENROLLMENT->value, [
-            'lectureId' => (string) $lectureEnrollment->getLectureId(),
-            'studentId' => (string) $lectureEnrollment->getStudentId(),
+            LectureEnrollmentCollectionColumnEnum::LECTURE_ID->value => (string) $lectureEnrollment->getLectureId(),
+            LectureEnrollmentCollectionColumnEnum::STUDENT_ID->value => (string) $lectureEnrollment->getStudentId(),
         ]);
     }
 }

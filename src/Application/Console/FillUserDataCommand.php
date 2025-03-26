@@ -6,6 +6,7 @@ namespace Gwo\AppsRecruitmentTask\Application\Console;
 
 use Gwo\AppsRecruitmentTask\Domain\Document\User\User;
 use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\UserCollectionColumnEnum;
 use Gwo\AppsRecruitmentTask\Domain\Enum\UserRole;
 use Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient;
 use Gwo\AppsRecruitmentTask\Util\StringId;
@@ -41,40 +42,40 @@ class FillUserDataCommand extends Command
         $output->writeln('Filling User collection with data...');
 
         $users = [
-            ['name' => 'Emma', 'role' => UserRole::LECTURER, 'password' => 'emma'],
-            ['name' => 'Daniel', 'role' => UserRole::LECTURER, 'password' => 'daniel'],
-            ['name' => 'Sophia', 'role' => UserRole::LECTURER, 'password' => 'sophia'],
-            ['name' => 'Michael', 'role' => UserRole::STUDENT, 'password' => 'michael'],
-            ['name' => 'Olivia', 'role' => UserRole::STUDENT, 'password' => 'olivia'],
-            ['name' => 'Lucas', 'role' => UserRole::STUDENT, 'password' => 'lucas'],
-            ['name' => 'Hannah', 'role' => UserRole::LECTURER, 'password' => 'hannah'],
-            ['name' => 'William', 'role' => UserRole::STUDENT, 'password' => 'william'],
-            ['name' => 'Natalie', 'role' => UserRole::LECTURER, 'password' => 'natalie'],
-            ['name' => 'Ethan', 'role' => UserRole::STUDENT, 'password' => 'ethan'],
+            [UserCollectionColumnEnum::NAME->value => 'Emma', UserCollectionColumnEnum::ROLE->value => UserRole::LECTURER, UserCollectionColumnEnum::PASSWORD->value => 'emma'],
+            [UserCollectionColumnEnum::NAME->value => 'Daniel', UserCollectionColumnEnum::ROLE->value => UserRole::LECTURER, UserCollectionColumnEnum::PASSWORD->value => 'daniel'],
+            [UserCollectionColumnEnum::NAME->value => 'Sophia', UserCollectionColumnEnum::ROLE->value => UserRole::LECTURER, UserCollectionColumnEnum::PASSWORD->value => 'sophia'],
+            [UserCollectionColumnEnum::NAME->value => 'Michael', UserCollectionColumnEnum::ROLE->value => UserRole::STUDENT, UserCollectionColumnEnum::PASSWORD->value => 'michael'],
+            [UserCollectionColumnEnum::NAME->value => 'Olivia', UserCollectionColumnEnum::ROLE->value => UserRole::STUDENT, UserCollectionColumnEnum::PASSWORD->value => 'olivia'],
+            [UserCollectionColumnEnum::NAME->value => 'Lucas', UserCollectionColumnEnum::ROLE->value => UserRole::STUDENT, UserCollectionColumnEnum::PASSWORD->value => 'lucas'],
+            [UserCollectionColumnEnum::NAME->value => 'Hannah', UserCollectionColumnEnum::ROLE->value => UserRole::LECTURER, UserCollectionColumnEnum::PASSWORD->value => 'hannah'],
+            [UserCollectionColumnEnum::NAME->value => 'William', UserCollectionColumnEnum::ROLE->value => UserRole::STUDENT, UserCollectionColumnEnum::PASSWORD->value => 'william'],
+            [UserCollectionColumnEnum::NAME->value => 'Natalie', UserCollectionColumnEnum::ROLE->value => UserRole::LECTURER, UserCollectionColumnEnum::PASSWORD->value => 'natalie'],
+            [UserCollectionColumnEnum::NAME->value => 'Ethan', UserCollectionColumnEnum::ROLE->value => UserRole::STUDENT, UserCollectionColumnEnum::PASSWORD->value => 'ethan'],
         ];
 
         foreach ($users as $userData) {
             $hashedPassword = $this->passwordHasher->hashPassword(
-                new User(StringId::new(), $userData['name'], $userData['role']),
-                $userData['password']
+                new User(StringId::new(), $userData[UserCollectionColumnEnum::NAME->value], $userData[UserCollectionColumnEnum::ROLE->value]),
+                $userData[UserCollectionColumnEnum::PASSWORD->value]
             );
 
             $user = new User(
                 StringId::new(),
-                $userData['name'],
-                $userData['role'],
+                $userData[UserCollectionColumnEnum::NAME->value],
+                $userData[UserCollectionColumnEnum::ROLE->value],
                 $hashedPassword
             );
 
             $this->databaseClient->upsert(
                 CollectionNameEnum::USER->value,
-                ['_id' => (string) $user->getId()],
+                [UserCollectionColumnEnum::ID->value => (string) $user->getId()],
                 [
                     '$set' => [
-                        '_id' => (string) $user->getId(),
-                        'name' => $user->getName(),
-                        'role' => $user->getRole()->value,
-                        'password' => $user->getPassword(),
+                        UserCollectionColumnEnum::ID->value => (string) $user->getId(),
+                        UserCollectionColumnEnum::NAME->value => $user->getName(),
+                        UserCollectionColumnEnum::ROLE->value => $user->getRole()->value,
+                        UserCollectionColumnEnum::PASSWORD->value => $user->getPassword(),
                     ],
                 ]
             );

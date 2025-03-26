@@ -18,11 +18,11 @@ final class CreateLectureDTO
     public int $studentLimit;
 
     #[Assert\NotBlank]
-    #[Assert\DateTime(format: 'Y-m-d H:i:s')]
+    #[Assert\DateTime(format: 'Y-m-d H:i')]
     public string $startDate;
 
     #[Assert\NotBlank]
-    #[Assert\DateTime(format: 'Y-m-d H:i:s')]
+    #[Assert\DateTime(format: 'Y-m-d H:i')]
     public string $endDate;
 
     public function __construct(
