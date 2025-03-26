@@ -37,9 +37,6 @@ RUN docker-php-source extract \
     && docker-php-ext-enable amqp \
     && docker-php-source delete
 
-# **Sprawdzenie, czy amqp.ini istnieje i jest poprawnie ładowane**
-RUN echo "extension=amqp.so" > /usr/local/etc/php/conf.d/20-amqp.ini
-
 # Instalacja rozszerzeń PHP
 RUN docker-php-ext-configure intl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \

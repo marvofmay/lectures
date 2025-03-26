@@ -61,6 +61,20 @@ services:
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq/
 
+#  worker-enroll-lecture:
+#    container_name: worker-enroll-lecture
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile
+#    command: [ "php", "bin/console", "messenger:consume", "enroll_lecture", "--verbose", "--no-interaction" ]
+#    depends_on:
+#      - rabbitmq
+#      - app
+#    environment:
+#      - MESSENGER_TRANSPORT_DSN=amqp://guest:guest@rabbitmq:5672/%2f
+#    volumes:
+#      - .:/var/www/html
+
 ###> doctrine/mongodb-odm-bundle ###
   mongodb:
     # In production, you may want to use a managed database service
