@@ -9,5 +9,6 @@ use Gwo\AppsRecruitmentTask\Domain\Document\LectureEnrollment\LectureEnrollment;
 interface LectureEnrollmentWriterInterface
 {
     public function saveInDB(LectureEnrollment $lectureEnrollment): void;
+
     public function deleteInDB(LectureEnrollment $lectureEnrollment): void;
 }

@@ -9,7 +9,7 @@ use Gwo\AppsRecruitmentTask\Domain\Service\LectureCreator;
 
 readonly class CreateLectureCommandHandler
 {
-    public function __construct(private LectureCreator $lectureCreator,)
+    public function __construct(private LectureCreator $lectureCreator)
     {
     }
 

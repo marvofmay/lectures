@@ -15,7 +15,7 @@ final class LectureListVoter extends Voter
 {
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return $attribute === PermissionLectureEnum::LIST_LECTURES->value && $subject === Lecture::class;
+        return $attribute === PermissionLectureEnum::LIST_LECTURES->value && Lecture::class === $subject;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -24,6 +24,6 @@ final class LectureListVoter extends Voter
             return false;
         }
 
-        return $token->getUser()->getRole() === UserRole::STUDENT;
+        return UserRole::STUDENT === $token->getUser()->getRole();
     }
 }

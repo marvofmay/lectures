@@ -6,10 +6,10 @@ namespace Gwo\AppsRecruitmentTask\Domain\Exception;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Event\ExceptionEvent;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CustomExceptionListener
 {

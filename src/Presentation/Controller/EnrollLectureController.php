@@ -39,15 +39,15 @@ class EnrollLectureController extends AbstractController
             }
 
             $errors = $this->lectureEnroller->validateBeforeQueuedEnrollment($uuid);
-            if (count($errors) === 0) {
-                $this->commandBus->dispatch(new EnrollLectureCommand($dtoOrResponse, (string)$this->security->getUser()->getId()));
+            if (0 === count($errors)) {
+                $this->commandBus->dispatch(new EnrollLectureCommand($dtoOrResponse, (string) $this->security->getUser()->getId()));
 
                 return new JsonResponse(['message' => $this->translator->trans('lecture.enroll.queued.success', [], 'lectures')], Response::HTTP_CREATED);
             } else {
                 $message = sprintf('%s: %s', $this->translator->trans('lecture.enroll.queued.error', [], 'lectures'), $errors['message']);
+
                 return new JsonResponse(['message' => $message], $errors['code']);
             }
-
         } catch (\Exception $error) {
             $message = sprintf('%s: %s', $this->translator->trans('lecture.enroll.queued.error', [], 'lectures'), $error->getMessage());
 

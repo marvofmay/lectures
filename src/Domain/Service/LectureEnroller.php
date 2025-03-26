@@ -48,7 +48,7 @@ readonly class LectureEnroller
             $errors = ['message' => 'Nie znaleziono wykładu.', 'code' => Response::HTTP_NOT_FOUND];
         }
 
-        if ($this->lectureEnrollmentReaderRepository->countEnrolledStudentsByLectureId((string)$lecture->getId()) >= $lecture->getStudentLimit()) {
+        if ($this->lectureEnrollmentReaderRepository->countEnrolledStudentsByLectureId((string) $lecture->getId()) >= $lecture->getStudentLimit()) {
             $errors = ['message' => 'Brak miejsc na ten wykład.', 'code' => Response::HTTP_CONFLICT];
         }
 

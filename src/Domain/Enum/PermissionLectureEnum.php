@@ -6,8 +6,8 @@ namespace Gwo\AppsRecruitmentTask\Domain\Enum;
 
 enum PermissionLectureEnum: string
 {
-    case CREATE          = 'create';
-    case ENROLL          = 'enroll';
-    case LIST_LECTURES   = 'listLectures';
-    case DELETE_STUDENT  = 'deleteStudent';
+    case CREATE = 'create';
+    case ENROLL = 'enroll';
+    case LIST_LECTURES = 'listLectures';
+    case DELETE_STUDENT = 'deleteStudent';
 }

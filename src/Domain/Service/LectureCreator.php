@@ -12,7 +12,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 readonly class LectureCreator
 {
-    public function __construct(private LectureWriterInterface $lectureWriterRepository, private Security $security,)
+    public function __construct(private LectureWriterInterface $lectureWriterRepository, private Security $security)
     {
     }
 

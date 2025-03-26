@@ -24,10 +24,10 @@ final class StudentDeleteVoter extends Voter
             return false;
         }
 
-        if ($token->getUser()->getRole() !== UserRole::LECTURER) {
+        if (UserRole::LECTURER !== $token->getUser()->getRole()) {
             return false;
         }
 
-        return (string)$subject->getLecturerId() === (string)$token->getUser()->getId();
+        return (string) $subject->getLecturerId() === (string) $token->getUser()->getId();
     }
 }

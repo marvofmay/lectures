@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Gwo\AppsRecruitmentTask\Util\Collection;
 
-use function Lambdish\Phunctional\first;
 use function Lambdish\Phunctional\all;
+use function Lambdish\Phunctional\first;
 use function Lambdish\Phunctional\instance_of;
 
 abstract class Collection implements \IteratorAggregate, \Countable

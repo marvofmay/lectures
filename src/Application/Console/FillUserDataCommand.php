@@ -25,7 +25,7 @@ class FillUserDataCommand extends Command
 
     public function __construct(
         private DatabaseClient $databaseClient,
-        private UserPasswordHasherInterface $passwordHasher
+        private UserPasswordHasherInterface $passwordHasher,
     ) {
         parent::__construct();
     }

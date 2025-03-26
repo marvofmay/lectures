@@ -22,7 +22,7 @@ final class LectureTest extends ApiTestCase
 
         $lectureResponse = $this->makeRequest('POST', '/api/lectures', json_encode($lectureData), [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(Response::HTTP_CREATED, $lectureResponse->getStatusCode());
@@ -41,7 +41,7 @@ final class LectureTest extends ApiTestCase
 
         $lectureResponse = $this->makeRequest('POST', '/api/lectures', json_encode($lectureData), [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(Response::HTTP_INTERNAL_SERVER_ERROR, $lectureResponse->getStatusCode());
@@ -53,14 +53,13 @@ final class LectureTest extends ApiTestCase
         $token = $this->loginUser(self::STUDENT_ETHAN);
         $lectureId = $this->getLectureIdByName(self::LECTURE_NAME);
 
-        $enrollResponse = $this->makeRequest('POST', '/api/lectures/' . $lectureId . '/enroll', '', [
+        $enrollResponse = $this->makeRequest('POST', '/api/lectures/'.$lectureId.'/enroll', '', [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(Response::HTTP_CREATED, $enrollResponse->getStatusCode());
     }
-
 
     /** @test */
     public function lecturerCanRemoveStudentFromOwnLecture(): void
@@ -76,25 +75,25 @@ final class LectureTest extends ApiTestCase
 
         $lectureResponse = $this->makeRequest('POST', '/api/lectures', json_encode($lectureData), [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
 
         $lectureId = $this->getLectureIdByName($lectureName);
         $this->assertEquals(Response::HTTP_CREATED, $lectureResponse->getStatusCode());
 
         $token = $this->loginUser(self::STUDENT_ETHAN);
-        $enrollResponse = $this->makeRequest('POST', '/api/lectures/' . $lectureId . '/enroll', '', [
+        $enrollResponse = $this->makeRequest('POST', '/api/lectures/'.$lectureId.'/enroll', '', [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
         $this->assertEquals(Response::HTTP_CREATED, $enrollResponse->getStatusCode());
 
         $studentId = $this->getUserIdByName('Ethan', 'student');
 
         $token = $this->loginUser(self::LECTURER_NATALIE);
-        $deleteStudentResponse = $this->makeRequest('DELETE', '/api/lectures/'.$lectureId.'/students/' . $studentId , '', [
+        $deleteStudentResponse = $this->makeRequest('DELETE', '/api/lectures/'.$lectureId.'/students/'.$studentId, '', [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(Response::HTTP_OK, $deleteStudentResponse->getStatusCode());
@@ -114,25 +113,25 @@ final class LectureTest extends ApiTestCase
 
         $lectureResponse = $this->makeRequest('POST', '/api/lectures', json_encode($lectureData), [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
 
         $lectureId = $this->getLectureIdByName($lectureName);
         $this->assertEquals(Response::HTTP_CREATED, $lectureResponse->getStatusCode());
 
         $token = $this->loginUser(self::STUDENT_OLIVIA);
-        $enrollResponse = $this->makeRequest('POST', '/api/lectures/' . $lectureId . '/enroll', '', [
+        $enrollResponse = $this->makeRequest('POST', '/api/lectures/'.$lectureId.'/enroll', '', [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
         $this->assertEquals(Response::HTTP_CREATED, $enrollResponse->getStatusCode());
 
         $studentId = $this->getUserIdByName('Ethan', 'student');
 
         $token = $this->loginUser(self::LECTURER_NATALIE);
-        $deleteStudentResponse = $this->makeRequest('DELETE', '/api/lectures/3f1a3b8e-9c2d-4e7b-b8a9-123456789abc/students/' . $studentId , '', [
+        $deleteStudentResponse = $this->makeRequest('DELETE', '/api/lectures/3f1a3b8e-9c2d-4e7b-b8a9-123456789abc/students/'.$studentId, '', [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $deleteStudentResponse->getStatusCode());
@@ -144,16 +143,16 @@ final class LectureTest extends ApiTestCase
         $this->addLimitedLecture();
         $token = $this->loginUser(self::STUDENT_ETHAN);
         $lectureId = $this->getLectureIdByName(self::LECTURE_LIMITED_NAME);
-        $enrollResponse = $this->makeRequest('POST', '/api/lectures/' . $lectureId . '/enroll', '', [
+        $enrollResponse = $this->makeRequest('POST', '/api/lectures/'.$lectureId.'/enroll', '', [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
         $this->assertEquals(Response::HTTP_CREATED, $enrollResponse->getStatusCode());
 
         $token = $this->loginUser(self::STUDENT_MICHAEL);
-        $enrollResponse = $this->makeRequest('POST', '/api/lectures/' . $lectureId . '/enroll', '', [
+        $enrollResponse = $this->makeRequest('POST', '/api/lectures/'.$lectureId.'/enroll', '', [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(Response::HTTP_CONFLICT, $enrollResponse->getStatusCode());
@@ -166,9 +165,9 @@ final class LectureTest extends ApiTestCase
         $token = $this->loginUser(self::STUDENT_ETHAN);
         $lectureId = $this->getLectureIdByName(self::LECTURE_EXPIRED_NAME);
 
-        $enrollResponse = $this->makeRequest('POST', '/api/lectures/' . $lectureId . '/enroll', '', [
+        $enrollResponse = $this->makeRequest('POST', '/api/lectures/'.$lectureId.'/enroll', '', [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $enrollResponse->getStatusCode());
@@ -181,15 +180,15 @@ final class LectureTest extends ApiTestCase
         $token = $this->loginUser(self::STUDENT_ETHAN);
 
         $lectureId = $this->getLectureIdByName(self::LECTURE_NAME);
-        $enrollResponse = $this->makeRequest('POST', '/api/lectures/' . $lectureId . '/enroll', '', [
+        $enrollResponse = $this->makeRequest('POST', '/api/lectures/'.$lectureId.'/enroll', '', [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
         $this->assertEquals(Response::HTTP_CREATED, $enrollResponse->getStatusCode());
 
-        $enrollResponse = $this->makeRequest('POST', '/api/lectures/' . $lectureId . '/enroll', '', [
+        $enrollResponse = $this->makeRequest('POST', '/api/lectures/'.$lectureId.'/enroll', '', [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
         $this->assertEquals(Response::HTTP_CONFLICT, $enrollResponse->getStatusCode());
     }
@@ -200,15 +199,15 @@ final class LectureTest extends ApiTestCase
         $token = $this->loginUser(self::STUDENT_ETHAN);
         $lectureId = $this->getLectureIdByName(self::LECTURE_NAME);
 
-        $enrollResponse = $this->makeRequest('POST', '/api/lectures/' . $lectureId . '/enroll', '', [
+        $enrollResponse = $this->makeRequest('POST', '/api/lectures/'.$lectureId.'/enroll', '', [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
         $this->assertEquals(Response::HTTP_CREATED, $enrollResponse->getStatusCode());
 
         $listLecturesResponse = $this->makeRequest('GET', '/api/students/lectures', '', [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
 
         $responseData = json_decode($listLecturesResponse->getContent(), true);

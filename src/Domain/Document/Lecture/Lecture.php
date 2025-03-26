@@ -11,22 +11,22 @@ use Gwo\AppsRecruitmentTask\Util\StringId;
 #[ODM\Document(collection: CollectionNameEnum::LECTURE->value)]
 final readonly class Lecture
 {
-    #[ODM\Id(strategy: "AUTO")]
+    #[ODM\Id(strategy: 'AUTO')]
     private StringId $id;
 
-    #[ODM\Field(type: "string", nullable: false)]
+    #[ODM\Field(type: 'string', nullable: false)]
     private StringId $lecturerId;
 
-    #[ODM\Field(type: "string", nullable: false)]
+    #[ODM\Field(type: 'string', nullable: false)]
     private string $name;
 
-    #[ODM\Field(type: "int", nullable: false)]
+    #[ODM\Field(type: 'int', nullable: false)]
     private int $studentLimit;
 
-    #[ODM\Field(type: "date", nullable: false)]
+    #[ODM\Field(type: 'date', nullable: false)]
     private \DateTimeImmutable $startDate;
 
-    #[ODM\Field(type: "date", nullable: false)]
+    #[ODM\Field(type: 'date', nullable: false)]
     private \DateTimeImmutable $endDate;
 
     public function __construct(
@@ -35,7 +35,7 @@ final readonly class Lecture
         string $name,
         int $studentLimit,
         \DateTimeImmutable $startDate,
-        \DateTimeImmutable $endDate
+        \DateTimeImmutable $endDate,
     ) {
         $this->id = $id;
         $this->lecturerId = $lecturerId;

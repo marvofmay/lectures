@@ -43,7 +43,7 @@ final readonly class DatabaseClient
             ->find($query, $options);
 
         return array_map(
-            static fn(BSONDocument $document): array => $document->getArrayCopy(),
+            static fn (BSONDocument $document): array => $document->getArrayCopy(),
             $documents->toArray(),
         );
     }

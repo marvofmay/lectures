@@ -12,13 +12,14 @@ use Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient;
 class MongoLectureEnrollmentReaderRepository implements LectureEnrollmentReaderInterface
 {
     public function __construct(
-        private DatabaseClient $databaseClient
-    ) {}
+        private DatabaseClient $databaseClient,
+    ) {
+    }
 
     public function countEnrolledStudentsByLectureId(string $lectureId): int
     {
         return $this->databaseClient->countDocuments(CollectionNameEnum::LECTURE_ENROLLMENT->value, [
-            LectureEnrollmentCollectionColumnEnum::LECTURE_ID->value => $lectureId
+            LectureEnrollmentCollectionColumnEnum::LECTURE_ID->value => $lectureId,
         ]);
     }
 
@@ -26,7 +27,7 @@ class MongoLectureEnrollmentReaderRepository implements LectureEnrollmentReaderI
     {
         $result = $this->databaseClient->getByQuery(CollectionNameEnum::LECTURE_ENROLLMENT->value, [
             LectureEnrollmentCollectionColumnEnum::LECTURE_ID->value => $lectureId,
-            LectureEnrollmentCollectionColumnEnum::STUDENT_ID->value => $studentId
+            LectureEnrollmentCollectionColumnEnum::STUDENT_ID->value => $studentId,
         ]);
 
         return !empty($result);
@@ -36,7 +37,7 @@ class MongoLectureEnrollmentReaderRepository implements LectureEnrollmentReaderI
     {
         $result = $this->databaseClient->getByQuery(CollectionNameEnum::LECTURE_ENROLLMENT->value, [
             LectureEnrollmentCollectionColumnEnum::LECTURE_ID->value => $lectureId,
-            LectureEnrollmentCollectionColumnEnum::STUDENT_ID->value => $studentId
+            LectureEnrollmentCollectionColumnEnum::STUDENT_ID->value => $studentId,
         ]);
 
         return !empty($result) ? $result[0] : null;

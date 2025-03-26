@@ -31,7 +31,7 @@ class StudentListLecturesController extends AbstractController
         try {
             $this->denyAccessUnlessGranted(PermissionLectureEnum::LIST_LECTURES->value, Lecture::class);
 
-            $handledStamp = $this->queryBus->dispatch(new StudentListLecturesQuery((string)$this->security->getUser()->getId()));
+            $handledStamp = $this->queryBus->dispatch(new StudentListLecturesQuery((string) $this->security->getUser()->getId()));
 
             return new JsonResponse(['data' => $handledStamp->last(HandledStamp::class)->getResult()], Response::HTTP_OK);
         } catch (\Exception $error) {

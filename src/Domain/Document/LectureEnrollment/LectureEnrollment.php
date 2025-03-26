@@ -14,16 +14,16 @@ final readonly class LectureEnrollment
     #[ODM\Id(type: 'string', strategy: 'auto')]
     private StringId $id;
 
-    #[ODM\Field(type: "string", nullable: false)]
+    #[ODM\Field(type: 'string', nullable: false)]
     private StringId $lectureId;
 
-    #[ODM\Field(type: "string", nullable: false)]
+    #[ODM\Field(type: 'string', nullable: false)]
     private StringId $studentId;
 
     public function __construct(
         StringId $id,
         StringId $lectureId,
-        StringId $studentId
+        StringId $studentId,
     ) {
         $this->id = $id;
         $this->lectureId = $lectureId;

@@ -8,11 +8,13 @@ use Gwo\AppsRecruitmentTask\Domain\DTO\CreateLectureDTO;
 
 readonly class CreateLectureCommand
 {
-        private string $name;
-        private int $studentLimit;
-        private string $startDate;
-        private string $endDate;
-    public function __construct(CreateLectureDTO $createLectureDTO) {
+    private string $name;
+    private int $studentLimit;
+    private string $startDate;
+    private string $endDate;
+
+    public function __construct(CreateLectureDTO $createLectureDTO)
+    {
         $this->name = $createLectureDTO->name;
         $this->studentLimit = $createLectureDTO->studentLimit;
         $this->startDate = $createLectureDTO->startDate;

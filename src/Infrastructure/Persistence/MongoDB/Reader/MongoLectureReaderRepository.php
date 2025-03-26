@@ -18,8 +18,9 @@ use Gwo\AppsRecruitmentTask\Util\StringId;
 class MongoLectureReaderRepository implements LectureReaderInterface
 {
     public function __construct(
-        private DatabaseClient $databaseClient
-    ) {}
+        private DatabaseClient $databaseClient,
+    ) {
+    }
 
     public function findByUUID(string $uuid): ?Lecture
     {
@@ -52,7 +53,7 @@ class MongoLectureReaderRepository implements LectureReaderInterface
             return new ArrayCollection();
         }
 
-        $lectureIds = array_map(fn($enrollment) => $enrollment['lectureId'], $lectureEnrollments);
+        $lectureIds = array_map(fn ($enrollment) => $enrollment['lectureId'], $lectureEnrollments);
 
         $lectures = $this->databaseClient->getByQuery(
             CollectionNameEnum::LECTURE->value,
@@ -63,7 +64,7 @@ class MongoLectureReaderRepository implements LectureReaderInterface
             return new ArrayCollection();
         }
 
-        $lecturerIds = array_unique(array_map(fn($lecture) => $lecture['lecturerId'], $lectures));
+        $lecturerIds = array_unique(array_map(fn ($lecture) => $lecture['lecturerId'], $lectures));
         $lecturers = $this->databaseClient->getByQuery(
             CollectionNameEnum::USER->value,
             [UserCollectionColumnEnum::ID->value => ['$in' => $lecturerIds]]
@@ -75,7 +76,7 @@ class MongoLectureReaderRepository implements LectureReaderInterface
         }
 
         $lectureObjects = array_map(
-            fn($lectureData) => [
+            fn ($lectureData) => [
                 'id' => (string) $lectureData['_id'],
                 'name' => $lectureData['name'],
                 'studentLimit' => $lectureData['studentLimit'],

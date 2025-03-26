@@ -13,8 +13,9 @@ use Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient;
 class MongoLectureEnrollmentWriterRepository implements LectureEnrollmentWriterInterface
 {
     public function __construct(
-        private DatabaseClient $databaseClient
-    ) {}
+        private DatabaseClient $databaseClient,
+    ) {
+    }
 
     public function saveInDB(LectureEnrollment $lectureEnrollment): void
     {

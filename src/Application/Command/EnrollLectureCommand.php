@@ -11,7 +11,8 @@ readonly class EnrollLectureCommand
     private string $lectureUUID;
     private string $studentUUID;
 
-    public function __construct(EnrollLectureDTO $enrollLectureDTO, string $studentUUID) {
+    public function __construct(EnrollLectureDTO $enrollLectureDTO, string $studentUUID)
+    {
         $this->lectureUUID = $enrollLectureDTO->lectureUUID;
         $this->studentUUID = $studentUUID;
     }

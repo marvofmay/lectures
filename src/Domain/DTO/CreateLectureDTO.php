@@ -29,7 +29,7 @@ final class CreateLectureDTO
         string $name,
         int $studentLimit,
         string $startDate,
-        string $endDate
+        string $endDate,
     ) {
         $this->name = $name;
         $this->studentLimit = $studentLimit;

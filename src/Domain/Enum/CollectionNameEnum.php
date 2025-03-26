@@ -6,7 +6,7 @@ namespace Gwo\AppsRecruitmentTask\Domain\Enum;
 
 enum CollectionNameEnum: string
 {
-    case LECTURE            = 'Lecture';
+    case LECTURE = 'Lecture';
     case LECTURE_ENROLLMENT = 'LectureEnrollment';
-    case USER               = 'User';
+    case USER = 'User';
 }

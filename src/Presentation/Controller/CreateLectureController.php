@@ -20,7 +20,7 @@ class CreateLectureController extends AbstractController
 {
     public function __construct(
         private readonly MessageBusInterface $commandBus,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
     }
 

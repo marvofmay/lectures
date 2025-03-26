@@ -7,7 +7,6 @@ namespace Gwo\AppsRecruitmentTask\Application\CommandHandler;
 use Gwo\AppsRecruitmentTask\Application\Command\DeleteStudentFromLectureCommand;
 use Gwo\AppsRecruitmentTask\Domain\Service\StudentDeleter;
 
-
 readonly class DeleteStudentFromLectureCommandHandler
 {
     public function __construct(private StudentDeleter $studentDeleter)

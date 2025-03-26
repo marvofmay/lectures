@@ -18,12 +18,10 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class MongoUserProvider implements UserProviderInterface
 {
-
     public function __construct(
         private DatabaseClient $databaseClient,
         private UserPasswordHasherInterface $passwordHasher,
     ) {
-
     }
 
     public function loadUserByIdentifier(string $identifier): UserInterface
@@ -42,10 +40,8 @@ class MongoUserProvider implements UserProviderInterface
         );
     }
 
-
     public function verifyPassword(UserInterface $user, string $rawPassword): bool
     {
-
         return $this->passwordHasher->isPasswordValid($user, $rawPassword);
     }
 
@@ -60,6 +56,6 @@ class MongoUserProvider implements UserProviderInterface
 
     public function supportsClass(string $class): bool
     {
-        return $class === User::class;
+        return User::class === $class;
     }
 }

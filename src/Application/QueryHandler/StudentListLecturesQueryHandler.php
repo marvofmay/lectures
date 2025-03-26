@@ -11,11 +11,12 @@ use Gwo\AppsRecruitmentTask\Domain\Interface\Lecture\LectureReaderInterface;
 final class StudentListLecturesQueryHandler
 {
     public function __construct(private readonly LectureReaderInterface $lectureReaderRepository)
-    {}
+    {
+    }
+
     public function __invoke(StudentListLecturesQuery $query): array
     {
-
-      return $this->handle($query->getStudentUUID());
+        return $this->handle($query->getStudentUUID());
     }
 
     private function handle(string $studentUUID): array

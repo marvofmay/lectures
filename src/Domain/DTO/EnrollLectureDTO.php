@@ -11,6 +11,7 @@ final class EnrollLectureDTO
     public function __construct(
         #[Assert\NotBlank]
         #[Assert\Uuid]
-        public string $lectureUUID
-    ) {}
+        public string $lectureUUID,
+    ) {
+    }
 }

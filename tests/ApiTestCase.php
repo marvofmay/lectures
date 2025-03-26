@@ -143,7 +143,7 @@ abstract class ApiTestCase extends WebTestCase
 
         $this->makeRequest('POST', '/api/lectures', json_encode($lectureData), [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
     }
 
@@ -168,7 +168,7 @@ abstract class ApiTestCase extends WebTestCase
 
         $this->makeRequest('POST', '/api/lectures', json_encode($lectureData), [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
     }
 
@@ -193,7 +193,7 @@ abstract class ApiTestCase extends WebTestCase
 
         $this->makeRequest('POST', '/api/lectures', json_encode($lectureData), [
             'CONTENT_TYPE' => 'application/json',
-            'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
     }
 

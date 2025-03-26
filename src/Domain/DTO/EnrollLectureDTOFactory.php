@@ -2,10 +2,9 @@
 
 namespace Gwo\AppsRecruitmentTask\Domain\DTO;
 
-use Gwo\AppsRecruitmentTask\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class EnrollLectureDTOFactory
 {
@@ -21,7 +20,7 @@ class EnrollLectureDTOFactory
         if (count($errors) > 0) {
             $errorMessages = [];
             foreach ($errors as $error) {
-                $errorMessages[] = $error->getPropertyPath() . ': ' . $error->getMessage();
+                $errorMessages[] = $error->getPropertyPath().': '.$error->getMessage();
             }
 
             return new JsonResponse(['errors' => $errorMessages], Response::HTTP_BAD_REQUEST);

@@ -14,23 +14,23 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ODM\Document(collection: CollectionNameEnum::USER->value)]
 final class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ODM\Id(strategy: "AUTO")]
+    #[ODM\Id(strategy: 'AUTO')]
     private StringId $id;
 
-    #[ODM\Field(type: "string", nullable: false)]
+    #[ODM\Field(type: 'string', nullable: false)]
     private string $name;
 
-    #[ODM\Field(type: "string", nullable: false)]
+    #[ODM\Field(type: 'string', nullable: false)]
     private UserRole $role;
 
-    #[ODM\Field(type: "string", nullable: true)]
+    #[ODM\Field(type: 'string', nullable: true)]
     private ?string $password = null;
 
     public function __construct(
         StringId $id,
         string $name,
         UserRole $role,
-        ?string $password = null
+        ?string $password = null,
     ) {
         $this->id = $id;
         $this->name = $name;

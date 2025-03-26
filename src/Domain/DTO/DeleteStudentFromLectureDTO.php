@@ -15,5 +15,6 @@ final class DeleteStudentFromLectureDTO
         #[Assert\NotBlank]
         #[Assert\Uuid]
         public string $studentUUID,
-    ) {}
+    ) {
+    }
 }

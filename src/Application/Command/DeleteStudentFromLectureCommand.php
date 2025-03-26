@@ -8,9 +8,11 @@ use Gwo\AppsRecruitmentTask\Domain\DTO\DeleteStudentFromLectureDTO;
 
 readonly class DeleteStudentFromLectureCommand
 {
-        private string $lectureUUID;
-        private string $studentUUID;
-    public function __construct(DeleteStudentFromLectureDTO $deleteStudentFromLectureDTO) {
+    private string $lectureUUID;
+    private string $studentUUID;
+
+    public function __construct(DeleteStudentFromLectureDTO $deleteStudentFromLectureDTO)
+    {
         $this->lectureUUID = $deleteStudentFromLectureDTO->lectureUUID;
         $this->studentUUID = $deleteStudentFromLectureDTO->studentUUID;
     }
@@ -20,7 +22,8 @@ readonly class DeleteStudentFromLectureCommand
         return $this->lectureUUID;
     }
 
-    public function getStudentUUID(): string {
+    public function getStudentUUID(): string
+    {
         return $this->studentUUID;
     }
 }
