@@ -9,8 +9,6 @@ use Gwo\AppsRecruitmentTask\Domain\Document\LectureEnrollment\LectureEnrollment;
 use Gwo\AppsRecruitmentTask\Domain\Interface\LectureEnrollment\LectureEnrollmentReaderInterface;
 use Gwo\AppsRecruitmentTask\Domain\Interface\LectureEnrollment\LectureEnrollmentWriterInterface;
 use Gwo\AppsRecruitmentTask\Util\StringId;
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 readonly class StudentDeleter
 {

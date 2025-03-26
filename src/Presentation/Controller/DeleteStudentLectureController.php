@@ -42,7 +42,7 @@ class DeleteStudentLectureController extends AbstractController
 
             $this->commandBus->dispatch(new DeleteStudentFromLectureCommand($dtoOrResponse));
 
-            return new JsonResponse(['message' => $this->translator->trans('lecture.student.delete.success', [], 'lectures')], Response::HTTP_CREATED);
+            return new JsonResponse(['message' => $this->translator->trans('lecture.student.delete.success', [], 'lectures')], Response::HTTP_OK);
         } catch (\Exception $error) {
             $message = sprintf('%s: %s', $this->translator->trans('lecture.student.delete.error', [], 'lectures'), $error->getMessage());
 

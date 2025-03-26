@@ -29,7 +29,7 @@ createLecture:
               - startDate
               - endDate
     responses:
-      204:
+      201:
         $ref: "../../components/responses/lectures/create_lecture.yaml#/responses/CreateSuccess"
       401:
         $ref: "../../components/responses/shared/invalid_token.yaml#/responses/InvalidToken"
