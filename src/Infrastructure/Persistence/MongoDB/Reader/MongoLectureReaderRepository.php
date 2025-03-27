@@ -7,10 +7,10 @@ namespace Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\Reader;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Gwo\AppsRecruitmentTask\Domain\Document\Lecture\Lecture;
-use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
-use Gwo\AppsRecruitmentTask\Domain\Enum\LectureCollectionColumnEnum;
-use Gwo\AppsRecruitmentTask\Domain\Enum\LectureEnrollmentCollectionColumnEnum;
-use Gwo\AppsRecruitmentTask\Domain\Enum\UserCollectionColumnEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\DocumentNameEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\LectureDocumentFieldEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\LectureEnrollmentDocumentFieldEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\UserDocumentFieldEnum;
 use Gwo\AppsRecruitmentTask\Domain\Interface\Lecture\LectureReaderInterface;
 use Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient;
 use Gwo\AppsRecruitmentTask\Util\StringId;
@@ -24,7 +24,7 @@ class MongoLectureReaderRepository implements LectureReaderInterface
 
     public function findByUUID(string $uuid): ?Lecture
     {
-        $result = $this->databaseClient->getByQuery(CollectionNameEnum::LECTURE->value, [LectureCollectionColumnEnum::ID->value => $uuid]);
+        $result = $this->databaseClient->getByQuery(DocumentNameEnum::LECTURE->value, [LectureDocumentFieldEnum::ID->value => $uuid]);
 
         if (empty($result)) {
             return null;
@@ -45,8 +45,8 @@ class MongoLectureReaderRepository implements LectureReaderInterface
     public function findLecturesByStudentUUID(string $studentUUID): Collection
     {
         $lectureEnrollments = $this->databaseClient->getByQuery(
-            CollectionNameEnum::LECTURE_ENROLLMENT->value,
-            [LectureEnrollmentCollectionColumnEnum::STUDENT_ID->value => $studentUUID]
+            DocumentNameEnum::LECTURE_ENROLLMENT->value,
+            [LectureEnrollmentDocumentFieldEnum::STUDENT_ID->value => $studentUUID]
         );
 
         if (empty($lectureEnrollments)) {
@@ -56,8 +56,8 @@ class MongoLectureReaderRepository implements LectureReaderInterface
         $lectureIds = array_map(fn ($enrollment) => $enrollment['lectureId'], $lectureEnrollments);
 
         $lectures = $this->databaseClient->getByQuery(
-            CollectionNameEnum::LECTURE->value,
-            [LectureCollectionColumnEnum::ID->value => ['$in' => $lectureIds]]
+            DocumentNameEnum::LECTURE->value,
+            [LectureDocumentFieldEnum::ID->value => ['$in' => $lectureIds]]
         );
 
         if (empty($lectures)) {
@@ -66,8 +66,8 @@ class MongoLectureReaderRepository implements LectureReaderInterface
 
         $lecturerIds = array_unique(array_map(fn ($lecture) => $lecture['lecturerId'], $lectures));
         $lecturers = $this->databaseClient->getByQuery(
-            CollectionNameEnum::USER->value,
-            [UserCollectionColumnEnum::ID->value => ['$in' => $lecturerIds]]
+            DocumentNameEnum::USER->value,
+            [UserDocumentFieldEnum::ID->value => ['$in' => $lecturerIds]]
         );
 
         $lecturerMap = [];

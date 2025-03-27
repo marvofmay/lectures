@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Gwo\AppsRecruitmentTask\Domain\Enum;
 
-enum UserCollectionColumnEnum: string
+enum UserDocumentFieldEnum: string
 {
     case ID = '_id';
     case NAME = 'name';

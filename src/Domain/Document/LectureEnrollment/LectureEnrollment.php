@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Gwo\AppsRecruitmentTask\Domain\Document\LectureEnrollment;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\DocumentNameEnum;
 use Gwo\AppsRecruitmentTask\Util\StringId;
 
-#[ODM\Document(collection: CollectionNameEnum::LECTURE_ENROLLMENT->value)]
+#[ODM\Document(collection: DocumentNameEnum::LECTURE_ENROLLMENT->value)]
 final readonly class LectureEnrollment
 {
     #[ODM\Id(type: 'string', strategy: 'auto')]

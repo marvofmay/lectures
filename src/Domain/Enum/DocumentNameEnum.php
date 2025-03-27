@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Gwo\AppsRecruitmentTask\Domain\Enum;
 
-enum CollectionNameEnum: string
+enum DocumentNameEnum: string
 {
     case LECTURE = 'Lecture';
     case LECTURE_ENROLLMENT = 'LectureEnrollment';
