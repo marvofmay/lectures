@@ -6,6 +6,13 @@ servers:
   - url: http://127.0.0.1:81
     description: Docker
 
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
 paths:
   /api/login:
     $ref: "./paths/auths/login.yaml#/login"
@@ -17,4 +24,3 @@ paths:
     $ref: "./paths/lectures/enroll_lecture.yaml#/enrollLecture"
   /api/students/lectures:
     $ref: "./paths/students/list_lectures.yaml#/listLectures"
-
