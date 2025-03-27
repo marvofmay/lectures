@@ -5,5 +5,4 @@
 
 # login 
    np.
-     name: Emma
-     password: emma
+     name: Emma, password: emma
