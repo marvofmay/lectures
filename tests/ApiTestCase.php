@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Gwo\AppsRecruitmentTask\Tests;
 
 use Gwo\AppsRecruitmentTask\Domain\Document\User\User;
-use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
-use Gwo\AppsRecruitmentTask\Domain\Enum\UserCollectionColumnEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\DocumentNameEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\UserDocumentFieldEnum;
 use Gwo\AppsRecruitmentTask\Domain\Enum\UserRole;
 use Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient;
 use Gwo\AppsRecruitmentTask\Util\StringId;
@@ -44,46 +44,46 @@ abstract class ApiTestCase extends WebTestCase
     protected function fillUserDatabase($databaseClient, $passwordHasher): void
     {
         $users = [
-            [UserCollectionColumnEnum::NAME->value => 'Emma', UserCollectionColumnEnum::ROLE->value => UserRole::LECTURER, UserCollectionColumnEnum::PASSWORD->value => 'emma'],
-            [UserCollectionColumnEnum::NAME->value => 'Daniel', UserCollectionColumnEnum::ROLE->value => UserRole::LECTURER, UserCollectionColumnEnum::PASSWORD->value => 'daniel'],
-            [UserCollectionColumnEnum::NAME->value => 'Sophia', UserCollectionColumnEnum::ROLE->value => UserRole::LECTURER, UserCollectionColumnEnum::PASSWORD->value => 'sophia'],
-            [UserCollectionColumnEnum::NAME->value => 'Michael', UserCollectionColumnEnum::ROLE->value => UserRole::STUDENT, UserCollectionColumnEnum::PASSWORD->value => 'michael'],
-            [UserCollectionColumnEnum::NAME->value => 'Olivia', UserCollectionColumnEnum::ROLE->value => UserRole::STUDENT, UserCollectionColumnEnum::PASSWORD->value => 'olivia'],
-            [UserCollectionColumnEnum::NAME->value => 'Lucas', UserCollectionColumnEnum::ROLE->value => UserRole::STUDENT, UserCollectionColumnEnum::PASSWORD->value => 'lucas'],
-            [UserCollectionColumnEnum::NAME->value => 'Hannah', UserCollectionColumnEnum::ROLE->value => UserRole::LECTURER, UserCollectionColumnEnum::PASSWORD->value => 'hannah'],
-            [UserCollectionColumnEnum::NAME->value => 'William', UserCollectionColumnEnum::ROLE->value => UserRole::STUDENT, UserCollectionColumnEnum::PASSWORD->value => 'william'],
-            [UserCollectionColumnEnum::NAME->value => 'Natalie', UserCollectionColumnEnum::ROLE->value => UserRole::LECTURER, UserCollectionColumnEnum::PASSWORD->value => 'natalie'],
-            [UserCollectionColumnEnum::NAME->value => 'Ethan', UserCollectionColumnEnum::ROLE->value => UserRole::STUDENT, UserCollectionColumnEnum::PASSWORD->value => 'ethan'],
+            [UserDocumentFieldEnum::NAME->value => 'Emma', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER, UserDocumentFieldEnum::PASSWORD->value => 'emma'],
+            [UserDocumentFieldEnum::NAME->value => 'Daniel', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER, UserDocumentFieldEnum::PASSWORD->value => 'daniel'],
+            [UserDocumentFieldEnum::NAME->value => 'Sophia', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER, UserDocumentFieldEnum::PASSWORD->value => 'sophia'],
+            [UserDocumentFieldEnum::NAME->value => 'Michael', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT, UserDocumentFieldEnum::PASSWORD->value => 'michael'],
+            [UserDocumentFieldEnum::NAME->value => 'Olivia', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT, UserDocumentFieldEnum::PASSWORD->value => 'olivia'],
+            [UserDocumentFieldEnum::NAME->value => 'Lucas', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT, UserDocumentFieldEnum::PASSWORD->value => 'lucas'],
+            [UserDocumentFieldEnum::NAME->value => 'Hannah', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER, UserDocumentFieldEnum::PASSWORD->value => 'hannah'],
+            [UserDocumentFieldEnum::NAME->value => 'William', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT, UserDocumentFieldEnum::PASSWORD->value => 'william'],
+            [UserDocumentFieldEnum::NAME->value => 'Natalie', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER, UserDocumentFieldEnum::PASSWORD->value => 'natalie'],
+            [UserDocumentFieldEnum::NAME->value => 'Ethan', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT, UserDocumentFieldEnum::PASSWORD->value => 'ethan'],
         ];
 
         foreach ($users as $userData) {
             $user = new User(
                 StringId::new(),
-                $userData[UserCollectionColumnEnum::NAME->value],
-                $userData[UserCollectionColumnEnum::ROLE->value]
+                $userData[UserDocumentFieldEnum::NAME->value],
+                $userData[UserDocumentFieldEnum::ROLE->value]
             );
 
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
-                $userData[UserCollectionColumnEnum::PASSWORD->value]
+                $userData[UserDocumentFieldEnum::PASSWORD->value]
             );
 
             $user = new User(
                 StringId::new(),
-                $userData[UserCollectionColumnEnum::NAME->value],
-                $userData[UserCollectionColumnEnum::ROLE->value],
-                $userData[UserCollectionColumnEnum::PASSWORD->value],
+                $userData[UserDocumentFieldEnum::NAME->value],
+                $userData[UserDocumentFieldEnum::ROLE->value],
+                $userData[UserDocumentFieldEnum::PASSWORD->value],
             );
 
             $databaseClient->upsert(
-                CollectionNameEnum::USER->value,
-                [UserCollectionColumnEnum::ID->value => (string) $user->getId()],
+                DocumentNameEnum::USER->value,
+                [UserDocumentFieldEnum::ID->value => (string) $user->getId()],
                 [
                     '$set' => [
-                        UserCollectionColumnEnum::ID->value => (string) $user->getId(),
-                        UserCollectionColumnEnum::NAME->value => $user->getName(),
-                        UserCollectionColumnEnum::ROLE->value => $user->getRole()->value,
-                        UserCollectionColumnEnum::PASSWORD->value => $hashedPassword,
+                        UserDocumentFieldEnum::ID->value => (string) $user->getId(),
+                        UserDocumentFieldEnum::NAME->value => $user->getName(),
+                        UserDocumentFieldEnum::ROLE->value => $user->getRole()->value,
+                        UserDocumentFieldEnum::PASSWORD->value => $hashedPassword,
                     ],
                 ]
             );

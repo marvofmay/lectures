@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Gwo\AppsRecruitmentTask\Domain\Enum;
 
-enum LectureEnrollmentCollectionColumnEnum: string
+enum LectureEnrollmentDocumentFieldEnum: string
 {
     case ID = '_id';
     case LECTURE_ID = 'lectureId';
