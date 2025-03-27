@@ -54,7 +54,7 @@ class LectureCreateVoterTest extends TestCase
     public function testVoteOnAttributeDeniesAccessForAnonymousUser(): void
     {
         $token = $this->createMock(TokenInterface::class);
-        $token->method('getUser')->willReturn(null); // Brak użytkownika
+        $token->method('getUser')->willReturn(null);
 
         $voteMethod = new ReflectionMethod(LectureCreateVoter::class, 'voteOnAttribute');
 
