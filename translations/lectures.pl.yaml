@@ -6,6 +6,8 @@ lecture:
     add:
       success: "Zapisano się na wykład"
       error: "Wystąpił błąd - nie zapisano na wykład"
+      noLogin: "Brak zalogowania"
+      noPermissions: "Brak uprawnień"
     queued:
       success: "Dodano do kolejki"
       error: "Wystąpił błąd - nie dodano do kolejki"

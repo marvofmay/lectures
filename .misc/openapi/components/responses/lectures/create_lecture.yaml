@@ -9,7 +9,16 @@ responses:
             message:
               type: string
               example: "Wykład został pomyślnie dodany"
-
+  NoLogin:
+    description:  Wystąpił błąd przy dodawaniu wykładu
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Brak loginu"
   CreateFailed:
     description: Wystąpił błąd przy dodawaniu wykładu
     content:
@@ -21,4 +30,14 @@ responses:
               type: string
               example: "Wystąpił błąd - wykład nie został dodany: Access Denied."
 
+  NoPermissions:
+    description:  Wystąpił błąd przy dodawaniu wykładu
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Brak uprawnień"
 

@@ -44,7 +44,7 @@ final class LectureTest extends ApiTestCase
             'HTTP_AUTHORIZATION' => 'Bearer '.$token,
         ]);
 
-        $this->assertEquals(Response::HTTP_INTERNAL_SERVER_ERROR, $lectureResponse->getStatusCode());
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $lectureResponse->getStatusCode());
     }
 
     /** @test */

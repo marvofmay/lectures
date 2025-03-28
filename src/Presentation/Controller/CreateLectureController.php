@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CreateLectureController extends AbstractController
@@ -29,6 +31,7 @@ class CreateLectureController extends AbstractController
     {
         try {
             $this->denyAccessUnlessGranted(PermissionLectureEnum::CREATE->value, Lecture::class);
+
             $dtoOrResponse = $dtoFactory->createFromRequest($request);
             if ($dtoOrResponse instanceof JsonResponse) {
                 return $dtoOrResponse;
@@ -37,9 +40,12 @@ class CreateLectureController extends AbstractController
             $this->commandBus->dispatch(new CreateLectureCommand($dtoOrResponse));
 
             return new JsonResponse(['message' => $this->translator->trans('lecture.add.success', [], 'lectures')], Response::HTTP_CREATED);
+        } catch (AuthenticationCredentialsNotFoundException) {
+            return new JsonResponse(['message' => $this->translator->trans('message.noLogin', [], 'messages')], Response::HTTP_BAD_REQUEST);
+        } catch (AccessDeniedException) {
+            return new JsonResponse(['message' => $this->translator->trans('message.noPermissions', [], 'messages')], Response::HTTP_FORBIDDEN);
         } catch (\Exception $error) {
-            $message = sprintf('%s: %s', $this->translator->trans('lecture.add.error', [], 'lectures'), $error->getMessage());
-
+            $message = sprintf('%s', $this->translator->trans('lecture.add.error', [], 'lectures'));
             return new JsonResponse(['message' => $message], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
