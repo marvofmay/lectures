@@ -35,8 +35,8 @@ final class LectureTest extends ApiTestCase
         $lectureData = [
             'name' => 'Lecture about IT',
             'studentLimit' => 15,
-            'startDate' => '2025-03-29 08:00',
-            'endDate' => '2025-03-29 15:00',
+            'startDate' => (new \DateTime('+1 day'))->format('Y-m-d H:i'),
+            'endDate' => (new \DateTime('+1 day +4 hours'))->format('Y-m-d H:i'),
         ];
 
         $lectureResponse = $this->makeRequest('POST', '/api/lectures', json_encode($lectureData), [
@@ -69,8 +69,8 @@ final class LectureTest extends ApiTestCase
         $lectureData = [
             'name' => $lectureName,
             'studentLimit' => 20,
-            'startDate' => '2025-03-29 08:00',
-            'endDate' => '2025-03-29 15:00',
+            'startDate' => (new \DateTime('+1 day'))->format('Y-m-d H:i'),
+            'endDate' => (new \DateTime('+1 day +4 hours'))->format('Y-m-d H:i'),
         ];
 
         $lectureResponse = $this->makeRequest('POST', '/api/lectures', json_encode($lectureData), [
@@ -88,7 +88,7 @@ final class LectureTest extends ApiTestCase
         ]);
         $this->assertEquals(Response::HTTP_CREATED, $enrollResponse->getStatusCode());
 
-        $studentId = $this->getUserIdByName('Ethan', 'student');
+        $studentId = $this->getUserIdByName(self::STUDENT_ETHAN, self::ROLE_STUDENT);
 
         $token = $this->loginUser(self::LECTURER_NATALIE);
         $deleteStudentResponse = $this->makeRequest('DELETE', '/api/lectures/'.$lectureId.'/students/'.$studentId, '', [
@@ -107,8 +107,8 @@ final class LectureTest extends ApiTestCase
         $lectureData = [
             'name' => $lectureName,
             'studentLimit' => 20,
-            'startDate' => '2025-03-29 08:00',
-            'endDate' => '2025-03-29 15:00',
+            'startDate' => (new \DateTime('+1 day'))->format('Y-m-d H:i'),
+            'endDate' => (new \DateTime('+1 day +4 hours'))->format('Y-m-d H:i'),
         ];
 
         $lectureResponse = $this->makeRequest('POST', '/api/lectures', json_encode($lectureData), [
@@ -126,7 +126,7 @@ final class LectureTest extends ApiTestCase
         ]);
         $this->assertEquals(Response::HTTP_CREATED, $enrollResponse->getStatusCode());
 
-        $studentId = $this->getUserIdByName('Ethan', 'student');
+        $studentId = $this->getUserIdByName(self::STUDENT_ETHAN, self::ROLE_STUDENT);
 
         $token = $this->loginUser(self::LECTURER_NATALIE);
         $deleteStudentResponse = $this->makeRequest('DELETE', '/api/lectures/3f1a3b8e-9c2d-4e7b-b8a9-123456789abc/students/'.$studentId, '', [
@@ -176,7 +176,6 @@ final class LectureTest extends ApiTestCase
     /** @test */
     public function cannotEnrollToSameLectureMoreThanOnce(): void
     {
-        $this->addLimitedLecture();
         $token = $this->loginUser(self::STUDENT_ETHAN);
 
         $lectureId = $this->getLectureIdByName(self::LECTURE_NAME);
@@ -226,8 +225,8 @@ final class LectureTest extends ApiTestCase
 
         $this->assertSame('Lecture about education', $lecture['name'], 'Niepoprawna nazwa wykładu.');
         $this->assertSame('Emma', $lecture['lecturerName'], 'Niepoprawne imię wykładowcy.');
-        $this->assertSame('2025-03-29 08:00', $lecture['startDate'], 'Niepoprawna data rozpoczęcia.');
-        $this->assertSame('2025-03-29 15:00', $lecture['endDate'], 'Niepoprawna data zakończenia.');
+        $this->assertSame((new \DateTime('+1 day'))->format('Y-m-d H:i'), $lecture['startDate'], 'Niepoprawna data rozpoczęcia.');
+        $this->assertSame((new \DateTime('+1 day +4 hours'))->format('Y-m-d H:i'), $lecture['endDate'], 'Niepoprawna data zakończenia.');
         $this->assertSame(10, $lecture['studentLimit'], 'Niepoprawny limit studentów.');
     }
 }

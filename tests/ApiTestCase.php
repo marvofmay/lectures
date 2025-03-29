@@ -26,6 +26,7 @@ abstract class ApiTestCase extends WebTestCase
     protected const STUDENT_ETHAN = 'Ethan';
     protected const STUDENT_OLIVIA = 'Olivia';
     protected const STUDENT_MICHAEL = 'Michael';
+    protected const ROLE_STUDENT = 'student';
 
     protected readonly KernelBrowser $httpClient;
 
@@ -137,8 +138,8 @@ abstract class ApiTestCase extends WebTestCase
         $lectureData = [
             'name' => self::LECTURE_NAME,
             'studentLimit' => 10,
-            'startDate' => '2025-03-29 08:00',
-            'endDate' => '2025-03-29 15:00',
+            'startDate' => (new \DateTime('+1 day'))->format('Y-m-d H:i'),
+            'endDate' => (new \DateTime('+1 day +4 hours'))->format('Y-m-d H:i'),
         ];
 
         $this->makeRequest('POST', '/api/lectures', json_encode($lectureData), [
@@ -162,8 +163,8 @@ abstract class ApiTestCase extends WebTestCase
         $lectureData = [
             'name' => self::LECTURE_EXPIRED_NAME,
             'studentLimit' => 10,
-            'startDate' => '2025-03-12 08:00',
-            'endDate' => '2025-03-12 15:00',
+            'startDate' => (new \DateTime('-3 day'))->format('Y-m-d H:i'),
+            'endDate' => (new \DateTime('-3 day +4 hours'))->format('Y-m-d H:i'),
         ];
 
         $this->makeRequest('POST', '/api/lectures', json_encode($lectureData), [
@@ -187,8 +188,8 @@ abstract class ApiTestCase extends WebTestCase
         $lectureData = [
             'name' => self::LECTURE_LIMITED_NAME,
             'studentLimit' => 1,
-            'startDate' => '2025-04-15 08:00',
-            'endDate' => '2025-04-15 15:00',
+            'startDate' => (new \DateTime('+1 day'))->format('Y-m-d H:i'),
+            'endDate' => (new \DateTime('+1 day +4 hours'))->format('Y-m-d H:i'),
         ];
 
         $this->makeRequest('POST', '/api/lectures', json_encode($lectureData), [
