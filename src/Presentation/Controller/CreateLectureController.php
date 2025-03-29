@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -37,7 +38,11 @@ class CreateLectureController extends AbstractController
                 return $dtoOrResponse;
             }
 
-            $this->commandBus->dispatch(new CreateLectureCommand($dtoOrResponse));
+            try {
+                $this->commandBus->dispatch(new CreateLectureCommand($dtoOrResponse));
+            } catch (HandlerFailedException $e) {
+               throw $e->getPrevious();
+            }
 
             return new JsonResponse(['message' => $this->translator->trans('lecture.add.success', [], 'lectures')], Response::HTTP_CREATED);
         } catch (AuthenticationCredentialsNotFoundException) {
