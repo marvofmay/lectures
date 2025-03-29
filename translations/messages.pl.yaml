@@ -1,3 +1,4 @@
 message:
   noLogin: "Brak zalogowania"
   noPermissions: "Brak uprawnień"
+  notFound: "Nie znaleziono zasobu"

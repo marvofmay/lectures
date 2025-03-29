@@ -2,6 +2,15 @@ responses:
   DeleteSuccess:
     description: "Student usunięty pomyślnie"
   NotFound:
-    description: "Nie znaleziono studenta na wykładzie"
+    description: "Wystąpił błąd przy usuwaniu studenta - brak zasobu"
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Brak zapisu dla lektury o id 11270bde-8bf8-4675-a3f6-948134bcf8b2 lub studenta o id 74f537a0-7940-4c33-8e60-8aada850b128"
+
   ServerError:
     description: "Błąd serwera"

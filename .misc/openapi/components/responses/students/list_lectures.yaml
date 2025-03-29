@@ -1,6 +1,6 @@
 responses:
   ListSuccess:
-    description: Pomyślnie pobrana lista wykładów
+    description: "Pomyślnie pobrana lista wykładów"
     content:
       application/json:
         schema:

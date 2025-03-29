@@ -5,5 +5,9 @@ listLectures:
     responses:
       200:
         $ref: "../../components/responses/students/list_lectures.yaml#/responses/ListSuccess"
+      400:
+        $ref: "../../components/responses/shared/no_login.yaml#/responses/NoLogin"
       401:
         $ref: "../../components/responses/shared/invalid_token.yaml#/responses/InvalidToken"
+      403:
+        $ref: "../../components/responses/shared/no_permissions.yaml#/responses/NoPermissions"

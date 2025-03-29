@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EnrollLectureController extends AbstractController
@@ -42,14 +44,23 @@ class EnrollLectureController extends AbstractController
             if (0 === count($errors)) {
                 $this->commandBus->dispatch(new EnrollLectureCommand($dtoOrResponse, (string) $this->security->getUser()->getId()));
 
-                return new JsonResponse(['message' => $this->translator->trans('lecture.enroll.queued.success', [], 'lectures')], Response::HTTP_CREATED);
+                // uncomment if rabbitmq
+                //$message = sprintf('%s: %s', $this->translator->trans('lecture.enroll.queued.success', [], 'lectures'));
+
+                $message = sprintf('%s', $this->translator->trans('lecture.enroll.add.success', [], 'lectures'));
+
+                return new JsonResponse(['message' => $message], Response::HTTP_CREATED);
             } else {
-                $message = sprintf('%s: %s', $this->translator->trans('lecture.enroll.queued.error', [], 'lectures'), $errors['message']);
+                $message = sprintf('%s: %s', $this->translator->trans('lecture.enroll.add.error', [], 'lectures'), $errors['message']);
 
                 return new JsonResponse(['message' => $message], $errors['code']);
             }
-        } catch (\Exception $error) {
-            $message = sprintf('%s: %s', $this->translator->trans('lecture.enroll.queued.error', [], 'lectures'), $error->getMessage());
+        } catch (AuthenticationCredentialsNotFoundException) {
+            return new JsonResponse(['message' => $this->translator->trans('message.noLogin', [], 'messages')], Response::HTTP_BAD_REQUEST);
+        } catch (AccessDeniedException) {
+            return new JsonResponse(['message' => $this->translator->trans('message.noPermissions', [], 'messages')], Response::HTTP_FORBIDDEN);
+        } catch (\Exception) {
+            $message = sprintf('%s', $this->translator->trans('lecture.enroll.queued.error', [], 'lectures'));
 
             return new JsonResponse(['message' => $message], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

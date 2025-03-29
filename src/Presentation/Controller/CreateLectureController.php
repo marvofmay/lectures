@@ -44,7 +44,7 @@ class CreateLectureController extends AbstractController
             return new JsonResponse(['message' => $this->translator->trans('message.noLogin', [], 'messages')], Response::HTTP_BAD_REQUEST);
         } catch (AccessDeniedException) {
             return new JsonResponse(['message' => $this->translator->trans('message.noPermissions', [], 'messages')], Response::HTTP_FORBIDDEN);
-        } catch (\Exception $error) {
+        } catch (\Exception) {
             $message = sprintf('%s', $this->translator->trans('lecture.add.error', [], 'lectures'));
             return new JsonResponse(['message' => $message], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

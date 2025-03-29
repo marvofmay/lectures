@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class StudentListLecturesController extends AbstractController
@@ -34,8 +36,12 @@ class StudentListLecturesController extends AbstractController
             $handledStamp = $this->queryBus->dispatch(new StudentListLecturesQuery((string) $this->security->getUser()->getId()));
 
             return new JsonResponse(['data' => $handledStamp->last(HandledStamp::class)->getResult()], Response::HTTP_OK);
-        } catch (\Exception $error) {
-            $message = sprintf('%s: %s', $this->translator->trans('student.lectures.list.error', [], 'students'), $error->getMessage());
+        } catch (AuthenticationCredentialsNotFoundException) {
+            return new JsonResponse(['message' => $this->translator->trans('message.noLogin', [], 'messages')], Response::HTTP_BAD_REQUEST);
+        } catch (AccessDeniedException) {
+            return new JsonResponse(['message' => $this->translator->trans('message.noPermissions', [], 'messages')], Response::HTTP_FORBIDDEN);
+        } catch (\Exception) {
+            $message = sprintf('%s', $this->translator->trans('student.lectures.list.error', [], 'students'));
 
             return new JsonResponse(['message' => $message], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

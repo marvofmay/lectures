@@ -6,15 +6,18 @@ namespace Gwo\AppsRecruitmentTask\Domain\Service;
 
 use Gwo\AppsRecruitmentTask\Application\Command\DeleteStudentFromLectureCommand;
 use Gwo\AppsRecruitmentTask\Domain\Document\LectureEnrollment\LectureEnrollment;
+use Gwo\AppsRecruitmentTask\Domain\Exception\NotFoundLectureEnrollmentException;
 use Gwo\AppsRecruitmentTask\Domain\Interface\LectureEnrollment\LectureEnrollmentReaderInterface;
 use Gwo\AppsRecruitmentTask\Domain\Interface\LectureEnrollment\LectureEnrollmentWriterInterface;
 use Gwo\AppsRecruitmentTask\Util\StringId;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 readonly class StudentDeleter
 {
     public function __construct(
         private LectureEnrollmentReaderInterface $lectureEnrollmentReaderRepository,
         private LectureEnrollmentWriterInterface $lectureEnrollmentWriterRepository,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -22,7 +25,13 @@ readonly class StudentDeleter
     {
         $lectureEnrollment = $this->lectureEnrollmentReaderRepository->getEnrolledStudentByLectureId($command->getLectureUUID(), $command->getStudentUUID());
         if (!$lectureEnrollment) {
-            throw new \RuntimeException('Nie znaleziono studenta zapisanego na ten wykład.');
+             throw new NotFoundLectureEnrollmentException(
+                $this->translator->trans(
+                    'lectureEnrollment.notFound',
+                    [':lectureUUID' => $command->getLectureUUID(), ':studentUUID' => $command->getStudentUUID()],
+                    'lectureEnrollments'
+                )
+            );
         }
 
         $this->lectureEnrollmentWriterRepository->deleteInDB(

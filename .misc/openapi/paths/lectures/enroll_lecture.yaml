@@ -10,12 +10,14 @@ enrollLecture:
         schema:
           type: string
     responses:
-      204:
+      201:
         $ref: "../../components/responses/lectures/enroll_lecture.yaml#/responses/EnrollSuccess"
       400:
         $ref: "../../components/responses/lectures/enroll_lecture.yaml#/responses/Expired"
       401:
         $ref: "../../components/responses/shared/invalid_token.yaml#/responses/InvalidToken"
+      403:
+        $ref: "../../components/responses/shared/no_permissions.yaml#/responses/NoPermissions"
       404:
         $ref: "../../components/responses/lectures/enroll_lecture.yaml#/responses/NotFound"
       409:

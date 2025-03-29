@@ -1,0 +1,2 @@
+lectureEnrollment:
+  notFound: "Brak zapisu dla lektury o id :lectureUUID lub studenta o id :studentUUID"

@@ -1,6 +1,6 @@
 responses:
   EnrollSuccess:
-    description: Zapisano się pomyślnie na wykład
+    description: "Zapisano się pomyślnie na wykład"
     content:
       application/json:
         schema:
@@ -11,7 +11,7 @@ responses:
               example: "Zapisano się na wykład"
 
   EnrollFailed:
-    description: Wystąpił błąd przy zapisywaniu się na wykład
+    description: "Wystąpił błąd przy zapisywaniu się na wykład"
     content:
       application/json:
         schema:
@@ -22,7 +22,7 @@ responses:
               example: "Wystąpił błąd - nie zapisano na wykład: Access Denied."
 
   NotFound:
-    description: Nie znaleziono zasobu
+    description: "Nie znaleziono zasobu"
     content:
       application/json:
         schema:
@@ -33,7 +33,7 @@ responses:
               example: "Nie znaleziono wykładu."
 
   NoLimits:
-    description: Brak wolnych miejsc
+    description: "Brak wolnych miejsc"
     content:
       application/json:
         schema:
@@ -44,7 +44,7 @@ responses:
               example: "Brak miejsc na ten wykład."
 
   Expired:
-    description: Upłynął termin zapisów
+    description: "Upłynął termin zapisów"
     content:
       application/json:
         schema:

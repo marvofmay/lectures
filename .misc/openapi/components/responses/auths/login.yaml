@@ -1,6 +1,6 @@
 responses:
   LoginSuccess:
-    description: Sukces – zwraca token JWT.
+    description: "Sukces – zwraca token JWT."
     content:
       application/json:
         schema:
@@ -10,7 +10,7 @@ responses:
               type: string
               example: "eyJhbGciOiJIUzI1..."
   LoginFailed:
-    description: Błąd autoryzacji – nieprawidłowe dane.
+    description: "Błąd autoryzacji – nieprawidłowe dane."
     content:
       application/json:
         schema:

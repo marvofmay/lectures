@@ -32,10 +32,10 @@ createLecture:
       201:
         $ref: "../../components/responses/lectures/create_lecture.yaml#/responses/CreateSuccess"
       400:
-        $ref: "../../components/responses/lectures/create_lecture.yaml#/responses/NoLogin"
+        $ref: "../../components/responses/shared/no_login.yaml#/responses/NoLogin"
       401:
         $ref: "../../components/responses/shared/invalid_token.yaml#/responses/InvalidToken"
       403:
-        $ref: "../../components/responses/lectures/create_lecture.yaml#/responses/NoPermissions"
+        $ref: "../../components/responses/shared/no_permissions.yaml#/responses/NoPermissions"
       500:
         $ref: "../../components/responses/lectures/create_lecture.yaml#/responses/CreateFailed"

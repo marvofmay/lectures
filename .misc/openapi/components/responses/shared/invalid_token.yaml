@@ -11,4 +11,4 @@ responses:
               example: 401
             message:
               type: string
-              example: "Invalid JWT Token"
+              example: "Nieprawidłowe dane."

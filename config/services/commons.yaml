@@ -27,7 +27,3 @@ services:
     arguments:
       $databaseClient: '@Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient'
       $passwordHasher: '@security.user_password_hasher'
-
-  Gwo\AppsRecruitmentTask\Domain\Exception\CustomExceptionListener:
-    tags:
-      - { name: kernel.event_listener, event: kernel.exception }
