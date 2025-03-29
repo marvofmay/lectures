@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,7 +34,11 @@ class StudentListLecturesController extends AbstractController
         try {
             $this->denyAccessUnlessGranted(PermissionLectureEnum::LIST_LECTURES->value, Lecture::class);
 
-            $handledStamp = $this->queryBus->dispatch(new StudentListLecturesQuery((string) $this->security->getUser()->getId()));
+            try {
+                $handledStamp = $this->queryBus->dispatch(new StudentListLecturesQuery((string) $this->security->getUser()->getId()));
+            } catch (HandlerFailedException $e) {
+                throw $e->getPrevious();
+            }
 
             return new JsonResponse(['data' => $handledStamp->last(HandledStamp::class)->getResult()], Response::HTTP_OK);
         } catch (AuthenticationCredentialsNotFoundException) {
