@@ -1,6 +1,6 @@
 # info:
 
-### wypełnia kolekcje User danymi:
+### wypełnia dokument User danymi:
     php bin/console app:fill-user-data
 
 ### login 
