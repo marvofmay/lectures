@@ -2,6 +2,8 @@ login:
   post:
     summary: Logowanie
     description: Umożliwia autentykację.
+    tags:
+      - LOGIN
     requestBody:
       required: true
       content:
@@ -11,10 +13,10 @@ login:
             properties:
               name:
                 type: string
-                example: "jan.kowalski"
+                example: "Emma"
               password:
                 type: string
-                example: "super_tajne_haslo"
+                example: "emma"
             required:
               - name
               - password

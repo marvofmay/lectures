@@ -2,6 +2,10 @@ enrollLecture:
   post:
     summary: Zapisywanie się na wykład
     description: Pozwala studentowi zapisać się na wykład.
+    tags:
+      - LECTURES
+    security:
+      - BearerAuth: []
     parameters:
       - name: lectureUUID
         in: path

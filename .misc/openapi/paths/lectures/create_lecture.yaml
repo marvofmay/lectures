@@ -2,6 +2,10 @@ createLecture:
   post:
     summary: Dodaje wykład
     description: Pozwala na dodanie wykładu przez wykładowcę.
+    tags:
+      - LECTURES
+    security:
+      - BearerAuth: []
     requestBody:
       required: true
       content:

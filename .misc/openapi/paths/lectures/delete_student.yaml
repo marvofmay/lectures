@@ -2,6 +2,10 @@ deleteStudent:
   delete:
     summary: Usuń studenta z wykładu
     description: Pozwala wykładowcy usnąć studenta z swojego wykładu.
+    tags:
+      - LECTURES
+    security:
+      - BearerAuth: []
     parameters:
       - name: lectureUUID
         in: path
