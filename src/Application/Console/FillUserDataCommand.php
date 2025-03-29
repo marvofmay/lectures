@@ -42,22 +42,22 @@ class FillUserDataCommand extends Command
         $output->writeln('Filling User collection with data...');
 
         $users = [
-            [UserDocumentFieldEnum::NAME->value => 'Emma', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER, UserDocumentFieldEnum::PASSWORD->value => 'emma'],
-            [UserDocumentFieldEnum::NAME->value => 'Daniel', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER, UserDocumentFieldEnum::PASSWORD->value => 'daniel'],
-            [UserDocumentFieldEnum::NAME->value => 'Sophia', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER, UserDocumentFieldEnum::PASSWORD->value => 'sophia'],
-            [UserDocumentFieldEnum::NAME->value => 'Michael', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT, UserDocumentFieldEnum::PASSWORD->value => 'michael'],
-            [UserDocumentFieldEnum::NAME->value => 'Olivia', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT, UserDocumentFieldEnum::PASSWORD->value => 'olivia'],
-            [UserDocumentFieldEnum::NAME->value => 'Lucas', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT, UserDocumentFieldEnum::PASSWORD->value => 'lucas'],
-            [UserDocumentFieldEnum::NAME->value => 'Hannah', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER, UserDocumentFieldEnum::PASSWORD->value => 'hannah'],
-            [UserDocumentFieldEnum::NAME->value => 'William', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT, UserDocumentFieldEnum::PASSWORD->value => 'william'],
-            [UserDocumentFieldEnum::NAME->value => 'Natalie', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER, UserDocumentFieldEnum::PASSWORD->value => 'natalie'],
-            [UserDocumentFieldEnum::NAME->value => 'Ethan', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT, UserDocumentFieldEnum::PASSWORD->value => 'ethan'],
+            [UserDocumentFieldEnum::NAME->value => 'Emma', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER,],
+            [UserDocumentFieldEnum::NAME->value => 'Daniel', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER,],
+            [UserDocumentFieldEnum::NAME->value => 'Sophia', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER,],
+            [UserDocumentFieldEnum::NAME->value => 'Michael', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT,],
+            [UserDocumentFieldEnum::NAME->value => 'Olivia', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT,],
+            [UserDocumentFieldEnum::NAME->value => 'Lucas', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT,],
+            [UserDocumentFieldEnum::NAME->value => 'Hannah', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER,],
+            [UserDocumentFieldEnum::NAME->value => 'William', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT,],
+            [UserDocumentFieldEnum::NAME->value => 'Natalie', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER,],
+            [UserDocumentFieldEnum::NAME->value => 'Ethan', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT,],
         ];
 
         foreach ($users as $userData) {
             $hashedPassword = $this->passwordHasher->hashPassword(
                 new User(StringId::new(), $userData[UserDocumentFieldEnum::NAME->value], $userData[UserDocumentFieldEnum::ROLE->value]),
-                $userData[UserDocumentFieldEnum::PASSWORD->value]
+                lcfirst($userData[UserDocumentFieldEnum::NAME->value])
             );
 
             $user = new User(
