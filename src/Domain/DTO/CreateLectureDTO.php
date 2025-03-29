@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Gwo\AppsRecruitmentTask\Domain\DTO;
 
+use Gwo\AppsRecruitmentTask\Domain\Interface\DTOInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class CreateLectureDTO
+final class CreateLectureDTO implements DTOInterface
 {
     #[Assert\NotBlank]
     #[Assert\Length(min: 3, max: 255)]
