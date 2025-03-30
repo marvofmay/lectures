@@ -21,9 +21,6 @@ jobs:
                 MONGO_INITDB_ROOT_PASSWORD: "password"
             ports:
                 - "27017:27017"
-
-    continue-on-error: true
-
     env:
         MONGODB_URL: 'mongodb://primary:password@localhost:27017'
 
