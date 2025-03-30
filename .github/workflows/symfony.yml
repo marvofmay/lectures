@@ -38,16 +38,6 @@ jobs:
       - name: Install Composer dependencies
         run: |
           composer install --no-interaction --prefer-dist --optimize-autoloader
-
-      - name: Run Symfony console commands
-        run: |
-          php bin/console doctrine:mongodb:schema:create
-          php bin/console cache:clear
-
-      - name: Run Symfony console commands
-        run: |
-          php bin/console app:fill-user-data
-          php bin/console cache:clear
      
       # - name: Run PHPStan
       #   run: vendor/bin/phpstan analyse --memory-limit=512M
