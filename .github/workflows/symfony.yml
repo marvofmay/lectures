@@ -22,7 +22,7 @@ jobs:
             ports:
                 - "27017:27017"
     env:
-        MONGODB_URL: 'mongodb://primary:password@localhost:27017'
+        MONGODB_URL: 'mongodb://root:password@localhost:27017'
 
     steps:
       - name: Checkout repo
