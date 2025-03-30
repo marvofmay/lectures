@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-        mongodb:
+        database:
             image: mongo:8
             env:
                 MONGO_INITDB_ROOT_USERNAME: "root"
@@ -41,14 +41,7 @@ jobs:
           composer install --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Set up environment file
-        run: cp .env.test .env
-
-      - name: Set custom DATABASE_URI for tests
-        env:
-          DATABASE_URI: mongodb://mongo:27017/apps-recruitment-task-tests 
-        run: |
-          php bin/console doctrine:mongodb:schema:create
-          php bin/console cache:clear          
+        run: cp .env.test .env       
   
       - name: Run PHPUnit tests
         run: vendor/bin/phpunit --configuration=phpunit.xml.dist 
