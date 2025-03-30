@@ -45,10 +45,10 @@ jobs:
           cp .env.test .env
           echo "DATABASE_URI=mongodb://mongo:27017/apps-recruitment-task-tests" >> .env
 
-      - name: Run Symfony console commands
-        run: |
-          php bin/console doctrine:mongodb:schema:create
-          php bin/console cache:clear
+      # - name: Run Symfony console commands
+      #   run: |
+      #     php bin/console doctrine:mongodb:schema:create
+      #     php bin/console cache:clear
 
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse --memory-limit=512M
