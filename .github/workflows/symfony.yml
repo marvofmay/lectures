@@ -14,36 +14,39 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      mongo:
+      mongodb:
         image: mongo:latest
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: admin
+          MONGO_INITDB_DATABASE: apps-recruitment-task-tests
         ports:
           - 27017:27017
-
-      rabbitmq:
-        image: rabbitmq:3.7-management
-        ports:
-          - 5672:5672
-          - 15672:15672           
+        options: >-
+          --health-cmd mongo
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.2
-          extensions: mbstring, pdo, pdo_mysql, intl, bcmath
-          coverage: none
-
-      - name: Install Composer dependencies
+      - name: Install mongosh
         run: |
-          composer install --no-interaction --prefer-dist --optimize-autoloader
+          sudo apt-get install gnupg
+          wget -qO- https://www.mongodb.org/static/pgp/server-7.0.asc | sudo tee /etc/apt/trusted.gpg.d/server-7.0.asc
+          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+          sudo apt-get update
+          sudo apt-get install -y mongodb-mongosh
+          mongosh --version
 
-      - name: Set up environment file
+      - name: Initalize MongoDB
         run: |
-          cp .env.test .env
-          echo "DATABASE_URI=mongodb://database:27017/apps-recruitment-task-tests" >> .env
+          mongosh --host localhost:27017 -u admin -p admin --authenticationDatabase admin <<EOF
+            db = db.getSiblingDB('APP-DB');
+            db.createUser({ user: 'APP-USERNAME', pwd: 'APP-PASSWORD', roles: [{ role: 'readWrite', db: 'APP-DB' }] })
+            db.createCollection('APP-COLLECTION');
+          EOF
 
       # - name: Run Symfony console commands
       #   run: |
