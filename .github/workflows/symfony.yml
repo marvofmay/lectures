@@ -43,7 +43,7 @@ jobs:
       - name: Set up environment file
         run: |
           cp .env.test .env
-          echo "DATABASE_URI=mongodb://mongo:27017/apps-recruitment-task-tests" >> .env
+          echo "DATABASE_URI=mongodb://database:27017/apps-recruitment-task-tests" >> .env
 
       # - name: Run Symfony console commands
       #   run: |
