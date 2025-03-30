@@ -39,7 +39,7 @@ jobs:
           composer install --no-interaction --prefer-dist --optimize-autoloader      
   
       - name: Run PHPUnit tests
-        run: vendor/bin/phpunit --configuration=phpunit.xml.dist 
+        run: vendor/bin/phpunit
 
 # jobs:
 #   symfony-tests:
