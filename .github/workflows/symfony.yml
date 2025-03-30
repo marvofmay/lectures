@@ -42,6 +42,10 @@ jobs:
 
       - name: Set up environment file
         run: cp .env.test .env
+
+      - name: Set custom DATABASE_URI for tests
+        env:
+          DATABASE_URI: mongodb://mongo:27017/apps-recruitment-task-tests        
   
       - name: Run PHPUnit tests
         run: vendor/bin/phpunit --configuration=phpunit.xml.dist 
