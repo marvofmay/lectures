@@ -19,7 +19,7 @@ jobs:
             ports:
                 - "27017:27017"
     env:
-        DATABASE_URI: 'mongodb://localhost:27017/apps-recruitment-task-tests'
+        DATABASE_URI: 'mongodb://localhost:27017/apps-recruitment-task'
 
     steps:
       - name: Checkout repo
@@ -34,10 +34,17 @@ jobs:
 
       - name: Install Composer dependencies
         run: |
-          composer install --no-interaction --prefer-dist --optimize-autoloader      
-
+          composer install --no-interaction --prefer-dist --optimize-autoloader   
+          
+      - name: Run Symfony console commands
+        run: |
+          php bin/console doctrine:mongodb:schema:create
+          php bin/console cache:clear
+                
       - name: Run console commnad
-        run: php bin/console app:fill-user-data
+        run: |
+          php bin/console app:fill-user-data
+          php bin/console cache:clear
   
       - name: Run PHPUnit tests
         run: vendor/bin/phpunit
