@@ -16,16 +16,12 @@ jobs:
     services:
         database:
             image: mongo:8
-            env:
-                MONGO_INITDB_ROOT_USERNAME: "root"
-                MONGO_INITDB_ROOT_PASSWORD: "password"
-                MONGO_INITDB_DATABASE: "database"
             ports:
                 - "27017:27017"
     env:
-        MONGODB_URL: 'mongodb://root:password@localhost:27017'
-        DATABASE_URI: 'mongodb://mongo:27017/apps-recruitment-task'
+        MONGODB_URL: 'mongodb://mongo:27017'
         MONGODB_DB: 'apps-recruitment-task'
+        DATABASE_URI: 'mongodb://database:27017/apps-recruitment-task-tests'
 
     steps:
       - name: Checkout repo
@@ -40,10 +36,7 @@ jobs:
 
       - name: Install Composer dependencies
         run: |
-          composer install --no-interaction --prefer-dist --optimize-autoloader
-
-      - name: Set up environment file
-        run: cp .env.test .env       
+          composer install --no-interaction --prefer-dist --optimize-autoloader      
   
       - name: Run PHPUnit tests
         run: vendor/bin/phpunit --configuration=phpunit.xml.dist 
