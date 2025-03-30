@@ -21,7 +21,7 @@ jobs:
     env:
         MONGODB_URL: 'mongodb://mongo:27017'
         MONGODB_DB: 'apps-recruitment-task'
-        DATABASE_URI: 'mongodb://database:27017/apps-recruitment-task-tests'
+        DATABASE_URI: 'mongodb://mongodb:27017/apps-recruitment-task-tests'
 
     steps:
       - name: Checkout repo
