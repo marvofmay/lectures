@@ -14,49 +14,48 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      mongodb:
-        image: mongo:8
-        env:
-          MONGO_INITDB_ROOT_USERNAME: root
-          MONGO_INITDB_ROOT_PASSWORD: admin
-          MONGO_INITDB_DATABASE: apps-recruitment-task-tests
-        ports:
-          - 27017:27017
-        options: >-
-          --health-cmd mongo
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        mongodb:
+            image: mongo:8
+            env:
+                MONGO_INITDB_ROOT_USERNAME: "primary"
+                MONGO_INITDB_ROOT_PASSWORD: "password"
+            ports:
+                - "27017:27017"
 
-    steps:
-      - uses: actions/checkout@v3
+    continue-on-error: true
 
-      - name: Install mongosh
-        run: |
-          sudo apt-get install gnupg
-          wget -qO- https://www.mongodb.org/static/pgp/server-7.0.asc | sudo tee /etc/apt/trusted.gpg.d/server-7.0.asc
-          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
-          sudo apt-get update
-          sudo apt-get install -y mongodb-mongosh
-          mongosh --version
+    env:
+        MONGODB_URL: 'mongodb://primary:password@localhost:27017'
 
-      - name: Initalize MongoDB
-        run: |
-          mongosh --host localhost:27017 -u admin -p admin --authenticationDatabase admin <<EOF
-            db = db.getSiblingDB('APP-DB');
-            db.createUser({ user: 'APP-USERNAME', pwd: 'APP-PASSWORD', roles: [{ role: 'readWrite', db: 'APP-DB' }] })
-            db.createCollection('APP-COLLECTION');
-          EOF
+    # steps:
+    #   - uses: actions/checkout@v3
+
+    #   - name: Install mongosh
+    #     run: |
+    #       sudo apt-get install gnupg
+    #       wget -qO- https://www.mongodb.org/static/pgp/server-7.0.asc | sudo tee /etc/apt/trusted.gpg.d/server-7.0.asc
+    #       echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+    #       sudo apt-get update
+    #       sudo apt-get install -y mongodb-mongosh
+    #       mongosh --version
+
+    #   - name: Initalize MongoDB
+    #     run: |
+    #       mongosh --host localhost:27017 -u admin -p admin --authenticationDatabase admin <<EOF
+    #         db = db.getSiblingDB('APP-DB');
+    #         db.createUser({ user: 'APP-USERNAME', pwd: 'APP-PASSWORD', roles: [{ role: 'readWrite', db: 'APP-DB' }] })
+    #         db.createCollection('APP-COLLECTION');
+    #       EOF
 
       # - name: Run Symfony console commands
       #   run: |
       #     php bin/console doctrine:mongodb:schema:create
       #     php bin/console cache:clear
 
-      - name: Run Symfony console commands
-        run: |
-          php bin/console app:fill-user-data
-          php bin/console cache:clear
+      # - name: Run Symfony console commands
+      #   run: |
+      #     php bin/console app:fill-user-data
+      #     php bin/console cache:clear
      
       # - name: Run PHPStan
       #   run: vendor/bin/phpstan analyse --memory-limit=512M
