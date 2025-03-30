@@ -42,8 +42,8 @@ jobs:
       # - name: Run PHPStan
       #   run: vendor/bin/phpstan analyse --memory-limit=512M
 
-      # - name: Run PHPUnit tests
-      #   run: vendor/bin/phpunit --testdox  
+      - name: Run PHPUnit tests
+        run: vendor/bin/phpunit --testdox  
 
 # jobs:
 #   symfony-tests:
