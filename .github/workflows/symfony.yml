@@ -29,11 +29,18 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
+        env:
+            MONGO_INITDB_ROOT_USERNAME: "root"
+            MONGO_INITDB_ROOT_PASSWORD: "password"     
+
       rabbitmq:
         image: rabbitmq:3.7-management
         ports:
           - 5672:5672
           - 15672:15672
+
+    env:
+      MONGODB_URL: 'mongodb://root:password@localhost:27017'             
 
     steps:
       - name: Checkout repo
