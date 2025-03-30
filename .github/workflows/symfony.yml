@@ -45,7 +45,10 @@ jobs:
 
       - name: Set custom DATABASE_URI for tests
         env:
-          DATABASE_URI: mongodb://mongo:27017/apps-recruitment-task-tests        
+          DATABASE_URI: mongodb://mongo:27017/apps-recruitment-task-tests 
+        run: |
+          php bin/console doctrine:mongodb:schema:create
+          php bin/console cache:clear          
   
       - name: Run PHPUnit tests
         run: vendor/bin/phpunit --configuration=phpunit.xml.dist 
