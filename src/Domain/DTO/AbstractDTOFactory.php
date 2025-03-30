@@ -19,7 +19,8 @@ class AbstractDTOFactory
     {
         $errors = $this->validator->validate($dto);
         if (count($errors) > 0) {
-            $errorMessages = array_map(fn($error) => $error->getPropertyPath() . ': ' . $error->getMessage(), iterator_to_array($errors));
+            $errorMessages = array_map(fn ($error) => $error->getPropertyPath().': '.$error->getMessage(), iterator_to_array($errors));
+
             return new JsonResponse(['errors' => $errorMessages], Response::HTTP_BAD_REQUEST);
         }
 

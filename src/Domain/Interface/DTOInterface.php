@@ -6,5 +6,4 @@ namespace Gwo\AppsRecruitmentTask\Domain\Interface;
 
 interface DTOInterface
 {
-
 }

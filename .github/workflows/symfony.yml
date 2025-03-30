@@ -53,5 +53,4 @@ jobs:
   
       - name: Run PHPUnit tests
         run: vendor/bin/phpunit
-        DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
-      run: vendor/bin/phpunit
+

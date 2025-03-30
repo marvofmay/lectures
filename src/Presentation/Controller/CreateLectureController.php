@@ -41,7 +41,7 @@ class CreateLectureController extends AbstractController
             try {
                 $this->commandBus->dispatch(new CreateLectureCommand($dtoOrResponse));
             } catch (HandlerFailedException $e) {
-               throw $e->getPrevious();
+                throw $e->getPrevious();
             }
 
             return new JsonResponse(['message' => $this->translator->trans('lecture.add.success', [], 'lectures')], Response::HTTP_CREATED);
@@ -51,6 +51,7 @@ class CreateLectureController extends AbstractController
             return new JsonResponse(['message' => $this->translator->trans('message.noPermissions', [], 'messages')], Response::HTTP_FORBIDDEN);
         } catch (\Exception) {
             $message = sprintf('%s', $this->translator->trans('lecture.add.error', [], 'lectures'));
+
             return new JsonResponse(['message' => $message], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

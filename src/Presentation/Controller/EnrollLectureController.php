@@ -45,7 +45,7 @@ class EnrollLectureController extends AbstractController
                 $this->commandBus->dispatch(new EnrollLectureCommand($dtoOrResponse, (string) $this->security->getUser()->getId()));
 
                 // uncomment if rabbitmq
-                //$message = sprintf('%s: %s', $this->translator->trans('lecture.enroll.queued.success', [], 'lectures'));
+                // $message = sprintf('%s: %s', $this->translator->trans('lecture.enroll.queued.success', [], 'lectures'));
 
                 $message = sprintf('%s', $this->translator->trans('lecture.enroll.add.success', [], 'lectures'));
 
