@@ -7,7 +7,7 @@ namespace Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\Reader;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Gwo\AppsRecruitmentTask\Domain\Document\Lecture\Lecture;
-use Gwo\AppsRecruitmentTask\Domain\Enum\DocumentNameEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
 use Gwo\AppsRecruitmentTask\Domain\Enum\LectureDocumentFieldEnum;
 use Gwo\AppsRecruitmentTask\Domain\Enum\LectureEnrollmentDocumentFieldEnum;
 use Gwo\AppsRecruitmentTask\Domain\Enum\UserDocumentFieldEnum;
@@ -24,7 +24,7 @@ class MongoLectureReaderRepository implements LectureReaderInterface
 
     public function findByUUID(string $uuid): ?Lecture
     {
-        $result = $this->databaseClient->getByQuery(DocumentNameEnum::LECTURE->value, [LectureDocumentFieldEnum::ID->value => $uuid]);
+        $result = $this->databaseClient->getByQuery(CollectionNameEnum::LECTURE->value, [LectureDocumentFieldEnum::ID->value => $uuid]);
 
         if (empty($result)) {
             return null;
@@ -45,7 +45,7 @@ class MongoLectureReaderRepository implements LectureReaderInterface
     public function findLecturesByStudentUUID(string $studentUUID): Collection
     {
         $lectureEnrollments = $this->databaseClient->getByQuery(
-            DocumentNameEnum::LECTURE_ENROLLMENT->value,
+            CollectionNameEnum::LECTURE_ENROLLMENT->value,
             [LectureEnrollmentDocumentFieldEnum::STUDENT_ID->value => $studentUUID]
         );
 
@@ -56,7 +56,7 @@ class MongoLectureReaderRepository implements LectureReaderInterface
         $lectureIds = array_map(fn ($enrollment) => $enrollment['lectureId'], $lectureEnrollments);
 
         $lectures = $this->databaseClient->getByQuery(
-            DocumentNameEnum::LECTURE->value,
+            CollectionNameEnum::LECTURE->value,
             [LectureDocumentFieldEnum::ID->value => ['$in' => $lectureIds]]
         );
 
@@ -66,7 +66,7 @@ class MongoLectureReaderRepository implements LectureReaderInterface
 
         $lecturerIds = array_unique(array_map(fn ($lecture) => $lecture['lecturerId'], $lectures));
         $lecturers = $this->databaseClient->getByQuery(
-            DocumentNameEnum::USER->value,
+            CollectionNameEnum::USER->value,
             [UserDocumentFieldEnum::ID->value => ['$in' => $lecturerIds]]
         );
 

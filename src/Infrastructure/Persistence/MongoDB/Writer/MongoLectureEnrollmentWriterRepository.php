@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\Writer;
 
 use Gwo\AppsRecruitmentTask\Domain\Document\LectureEnrollment\LectureEnrollment;
-use Gwo\AppsRecruitmentTask\Domain\Enum\DocumentNameEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
 use Gwo\AppsRecruitmentTask\Domain\Enum\LectureEnrollmentDocumentFieldEnum;
 use Gwo\AppsRecruitmentTask\Domain\Interface\LectureEnrollment\LectureEnrollmentWriterInterface;
 use Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient;
@@ -20,7 +20,7 @@ class MongoLectureEnrollmentWriterRepository implements LectureEnrollmentWriterI
     public function saveInDB(LectureEnrollment $lectureEnrollment): void
     {
         $this->databaseClient->upsert(
-            DocumentNameEnum::LECTURE_ENROLLMENT->value,
+            CollectionNameEnum::LECTURE_ENROLLMENT->value,
             [LectureEnrollmentDocumentFieldEnum::ID->value => (string) $lectureEnrollment->getId()],
             [
                 '$set' => [
@@ -34,7 +34,7 @@ class MongoLectureEnrollmentWriterRepository implements LectureEnrollmentWriterI
 
     public function deleteInDB(LectureEnrollment $lectureEnrollment): void
     {
-        $this->databaseClient->deleteDocuments(DocumentNameEnum::LECTURE_ENROLLMENT->value, [
+        $this->databaseClient->deleteDocuments(CollectionNameEnum::LECTURE_ENROLLMENT->value, [
             LectureEnrollmentDocumentFieldEnum::LECTURE_ID->value => (string) $lectureEnrollment->getLectureId(),
             LectureEnrollmentDocumentFieldEnum::STUDENT_ID->value => (string) $lectureEnrollment->getStudentId(),
         ]);

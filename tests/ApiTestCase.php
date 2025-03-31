@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Gwo\AppsRecruitmentTask\Tests;
 
 use Gwo\AppsRecruitmentTask\Domain\Document\User\User;
-use Gwo\AppsRecruitmentTask\Domain\Enum\DocumentNameEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
 use Gwo\AppsRecruitmentTask\Domain\Enum\UserDocumentFieldEnum;
 use Gwo\AppsRecruitmentTask\Domain\Enum\UserRole;
 use Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient;
@@ -77,7 +77,7 @@ abstract class ApiTestCase extends WebTestCase
             );
 
             $databaseClient->upsert(
-                DocumentNameEnum::USER->value,
+                CollectionNameEnum::USER->value,
                 [UserDocumentFieldEnum::ID->value => (string) $user->getId()],
                 [
                     '$set' => [

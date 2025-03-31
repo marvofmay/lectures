@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\Reader;
 
-use Gwo\AppsRecruitmentTask\Domain\Enum\DocumentNameEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
 use Gwo\AppsRecruitmentTask\Domain\Enum\LectureEnrollmentDocumentFieldEnum;
 use Gwo\AppsRecruitmentTask\Domain\Interface\LectureEnrollment\LectureEnrollmentReaderInterface;
 use Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient;
@@ -18,14 +18,14 @@ class MongoLectureEnrollmentReaderRepository implements LectureEnrollmentReaderI
 
     public function countEnrolledStudentsByLectureId(string $lectureId): int
     {
-        return $this->databaseClient->countDocuments(DocumentNameEnum::LECTURE_ENROLLMENT->value, [
+        return $this->databaseClient->countDocuments(CollectionNameEnum::LECTURE_ENROLLMENT->value, [
             LectureEnrollmentDocumentFieldEnum::LECTURE_ID->value => $lectureId,
         ]);
     }
 
     public function isStudentAlreadyEnrolled(string $lectureId, string $studentId): bool
     {
-        $result = $this->databaseClient->getByQuery(DocumentNameEnum::LECTURE_ENROLLMENT->value, [
+        $result = $this->databaseClient->getByQuery(CollectionNameEnum::LECTURE_ENROLLMENT->value, [
             LectureEnrollmentDocumentFieldEnum::LECTURE_ID->value => $lectureId,
             LectureEnrollmentDocumentFieldEnum::STUDENT_ID->value => $studentId,
         ]);
@@ -35,7 +35,7 @@ class MongoLectureEnrollmentReaderRepository implements LectureEnrollmentReaderI
 
     public function getEnrolledStudentByLectureId(string $lectureId, string $studentId): ?array
     {
-        $result = $this->databaseClient->getByQuery(DocumentNameEnum::LECTURE_ENROLLMENT->value, [
+        $result = $this->databaseClient->getByQuery(CollectionNameEnum::LECTURE_ENROLLMENT->value, [
             LectureEnrollmentDocumentFieldEnum::LECTURE_ID->value => $lectureId,
             LectureEnrollmentDocumentFieldEnum::STUDENT_ID->value => $studentId,
         ]);

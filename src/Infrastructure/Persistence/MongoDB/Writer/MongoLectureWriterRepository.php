@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\Writer;
 
 use Gwo\AppsRecruitmentTask\Domain\Document\Lecture\Lecture;
-use Gwo\AppsRecruitmentTask\Domain\Enum\DocumentNameEnum;
+use Gwo\AppsRecruitmentTask\Domain\Enum\CollectionNameEnum;
 use Gwo\AppsRecruitmentTask\Domain\Enum\LectureDocumentFieldEnum;
 use Gwo\AppsRecruitmentTask\Domain\Interface\Lecture\LectureWriterInterface;
 use Gwo\AppsRecruitmentTask\Infrastructure\Persistence\MongoDB\DatabaseClient;
@@ -20,7 +20,7 @@ class MongoLectureWriterRepository implements LectureWriterInterface
     public function saveInDB(Lecture $lecture): void
     {
         $this->databaseClient->upsert(
-            DocumentNameEnum::LECTURE->value,
+            CollectionNameEnum::LECTURE->value,
             [LectureDocumentFieldEnum::ID->value => (string) $lecture->getId()],
             [
                 '$set' => [
