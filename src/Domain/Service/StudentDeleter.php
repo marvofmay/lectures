@@ -25,13 +25,7 @@ readonly class StudentDeleter
     {
         $lectureEnrollment = $this->lectureEnrollmentReaderRepository->getEnrolledStudentByLectureId($command->getLectureUUID(), $command->getStudentUUID());
         if (!$lectureEnrollment) {
-             throw new NotFoundLectureEnrollmentException(
-                $this->translator->trans(
-                    'lectureEnrollment.notFound',
-                    [':lectureUUID' => $command->getLectureUUID(), ':studentUUID' => $command->getStudentUUID()],
-                    'lectureEnrollments'
-                )
-            );
+            throw new NotFoundLectureEnrollmentException($this->translator->trans('lectureEnrollment.notFound', [':lectureUUID' => $command->getLectureUUID(), ':studentUUID' => $command->getStudentUUID()], 'lectureEnrollments'));
         }
 
         $this->lectureEnrollmentWriterRepository->deleteInDB(

@@ -42,16 +42,16 @@ class FillUserDataCommand extends Command
         $output->writeln('Filling User collection with data...');
 
         $users = [
-            [UserDocumentFieldEnum::NAME->value => 'Emma', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER,],
-            [UserDocumentFieldEnum::NAME->value => 'Daniel', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER,],
-            [UserDocumentFieldEnum::NAME->value => 'Sophia', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER,],
-            [UserDocumentFieldEnum::NAME->value => 'Michael', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT,],
-            [UserDocumentFieldEnum::NAME->value => 'Olivia', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT,],
-            [UserDocumentFieldEnum::NAME->value => 'Lucas', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT,],
-            [UserDocumentFieldEnum::NAME->value => 'Hannah', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER,],
-            [UserDocumentFieldEnum::NAME->value => 'William', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT,],
-            [UserDocumentFieldEnum::NAME->value => 'Natalie', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER,],
-            [UserDocumentFieldEnum::NAME->value => 'Ethan', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT,],
+            [UserDocumentFieldEnum::NAME->value => 'Emma', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER],
+            [UserDocumentFieldEnum::NAME->value => 'Daniel', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER],
+            [UserDocumentFieldEnum::NAME->value => 'Sophia', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER],
+            [UserDocumentFieldEnum::NAME->value => 'Michael', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT],
+            [UserDocumentFieldEnum::NAME->value => 'Olivia', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT],
+            [UserDocumentFieldEnum::NAME->value => 'Lucas', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT],
+            [UserDocumentFieldEnum::NAME->value => 'Hannah', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER],
+            [UserDocumentFieldEnum::NAME->value => 'William', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT],
+            [UserDocumentFieldEnum::NAME->value => 'Natalie', UserDocumentFieldEnum::ROLE->value => UserRole::LECTURER],
+            [UserDocumentFieldEnum::NAME->value => 'Ethan', UserDocumentFieldEnum::ROLE->value => UserRole::STUDENT],
         ];
 
         foreach ($users as $userData) {
